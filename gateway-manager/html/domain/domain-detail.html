@@ -1,0 +1,85 @@
+<div style="margin: 0px;">
+</div>
+
+<div class="cubeui-fluid">
+
+    <fieldset>
+        <legend>基本信息(必填)</legend>
+    </fieldset>
+    <!--        <input type='hidden' id='id' name='id' value1='{{:id}}'/>-->
+    <!--        <div class="cubeui-row" id="domainIdDiv">-->
+    <!--            <div class="cubeui-col-sm12">-->
+    <!--                <label class="cubeui-form-label">ID:</label>-->
+    <!--                <div class="cubeui-input-block">-->
+    <!--                    <input type="text" id="id2" readonly name="id2" value='{{:id}}' data-toggle="cubeui-textbox"-->
+    <!--                           data-options="required:true,prompt:'域名的ID，必须填写'">-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">名称:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-textbox" id="domain_name" name="domain_name"
+                       value='{{:domain_name}}' data-options="required:true,prompt:'域名的名称，必须填写'">
+            </div>
+        </div>
+    </div>
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">域名:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-textbox" id="domain_url" name="domain_url"
+                       value='{{:domain_url}}' data-options="required:true,prompt:'域名+端口，必须填写'">
+            </div>
+        </div>
+    </div>
+<!--
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm3">
+            <label class="cubeui-form-label">开启SSL:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-switchbutton" id="ssl_on" name="ssl_on"
+                       value='{{:ssl_on}}' data-options="value:1,width:'80px',required:false,onText:'',offText:''">
+            </div>
+        </div>
+        <div class="cubeui-col-sm9">
+            <label class="cubeui-form-label">SSL端口:</label>
+            <div class="cubeui-input-block">
+                <input type="text" disabled data-toggle="cubeui-numberspinner" id="ssl_port" name="ssl_port"
+                       value='{{:ssl_port}}' data-options="required:false,prompt:'SSL端口，默认为9443'">
+            </div>
+        </div>
+    </div>
+-->
+
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">备注信息</label>
+            <div class="cubeui-input-block">
+                <input value='{{:demo}}' type="text" id="demo" name="demo" data-toggle="cubeui-textarea"
+                       data-options="required:false,prompt:'备注信息，选择填写'">
+            </div>
+        </div>
+    </div>
+
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">黑名单:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-tagbox" id="black_ips" name="black_ips"
+                       value='{{:black_ips}}' data-options="required:false,prompt:'黑名单，禁止访问网关，选择填写'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<template-func>
+
+    console.log("url : " + window.location.href)
+    console.log("id : " + getUrlParam("id"))
+
+    //renderHandler.render({test:"Hello world"})
+
+    //$("#userAddDialog").dialog('setTitle', "11111111111111111111")
+</template-func>

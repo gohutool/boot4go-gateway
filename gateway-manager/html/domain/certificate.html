@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:jc="http://www.joinsunsoft.com">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <script src="/static/common/js/ui.js"></script>
+</head>
+
+<body>
+<div id="loading" class="loading-wrap">
+    <div class="loading-content">
+        <div class="loading-round"></div>
+        <div class="loading-dot"></div>
+    </div>
+</div>
+<script id="certTmpl1" type="text/x-jquery-tmpl">
+<table id="certDg"></table>
+<!-- 表格工具栏开始 -->
+<div id="certDg-toolbar" class="cubeui-toolbar"
+     data-options="grid:{
+           type:'datagrid',
+           id:'certDg'
+       }">
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            onClick:function(){
+                openEditDiag();
+            },
+            extend: '#certDg-toolbar',
+            btnCls: 'cubeui-btn-red',
+            iconCls: 'fa fa-plus'
+        }">新增</a>
+
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            onClick:function(){
+                $('#certDg').datagrid('reload',{})
+            },
+            extend: '#certDg-toolbar',
+            btnCls: 'cubeui-btn-orange',
+            iconCls: 'fa fa-refresh'
+        }">刷新</a>
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            method:'filter',
+            extend: '#certDg-toolbar',
+            btnCls: 'cubeui-btn-blue',
+            iconCls: 'fa fa-refresh'
+        }">过滤</a>
+
+    <form id="queryForm" class="search-box">
+    	<input type="text" name="email" data-toggle="cubeui-textbox"
+               data-options="id:'email',prompt:'ID查询',width:360">
+        <a href="javascript:void(0)"
+           data-toggle="cubeui-menubutton"
+           data-options="method:'query',
+           iconCls:'fa fa-search',
+           btnCls:'cubeui-btn-blue',
+           form:{id:'queryForm'},
+           grid:{type:'datagrid','id':'certDg'}">查询</a>
+    </form>
+</div>
+<!-- 表格工具栏结束 -->
+</script>
+
+</body>
+
+<script>
+
+    new APP(function () {
+        return {
+            css: [],
+            js: [
+
+            ],
+            render: function () {
+                stop = true
+                console.log("finish")
+
+                APP.renderBody("#certTmpl1", {id:"1022", name:"davidliu"})
+            }
+        }
+    });
+
+    APP.fn(function (){
+        var certDg = {
+            type: 'datagrid',
+            id: 'certDg'
+        };
+
+        $("#certDg").iDatagrid({
+            url: V3_API_URL + '/cert/list',
+            idField: 'ID',
+            frozenColumns:[[
+                // {field: 'id', title: '', checkbox: true},
+                {field: 'id', title: 'ID', sortable: false,
+                    formatter:$.iGrid.templateformatter('{id}'),
+                    width: 350},
+            ]],
+            columns: [[
+                {
+                    field: 'ser_name',
+                    title: '域名',
+                    sortable: true,
+                    width: 240,
+                    formatter:$.iGrid.tooltipformatter()
+                },
+                {field: 'set_time', title: '创建日期', sortable: false, width: 160},
+                {field: 'op', title: '操作', sortable: false, width: 380, formatter:operateFormatter}
+            ]]
+        });
+
+        $("#certDg").datagrid('setLocalPage');
+        // $("#certDg").datagrid('enableFilter');
+    })
+
+    function operateFormatter(value, row, index) {
+        var htmlstr = "";
+
+        htmlstr += '<button class="layui-btn layui-btn-danger layui-btn-xs" onclick="openEditDiag(\'' + row.id + '\')">修改证书</button>';
+        htmlstr += '<button class="cubeui-btn-gray layui-btn layui-btn-xs" onclick="delCert(\'' + row.id + '\')">删除证书</button>';
+
+        return htmlstr;
+    }
+
+    function delCert(id){
+        $.app.confirm(null, "确认删除证书"+id, function (){
+            $.app.deleteJson(V3_API_URL + '/cert/'+id, null, function (data) {
+                $.app.show(data.msg);
+                $('#certDg').datagrid('reload')
+            })
+        })
+    }
+
+
+    function openEditDiag(id){
+        
+        openDlg = function (data, title){
+            $.iDialog.openDialog({
+                title: '编辑',
+                maximized:true,
+                minimizable:false,
+                width: 850,
+                height: 650,
+                render:function(opts, handler){
+                    let d = this;
+                    console.log("Open dialog")
+
+                    handler.render(data);
+                    $(d).dialog('setTitle', title);
+                },
+                href: contextpath + '/domain/certificate-detail.html?id='+id,
+                buttonsGroup: [{
+                    text: '保存',
+                    iconCls: 'fa fa-save',
+                    reload: [{type:'datagrid', id:'certDg', keepcheck:0}],
+                    btnCls: 'cubeui-btn-blue',
+                    handler:'ajaxForm',
+                    requestType:'put',
+                    postJson:true,
+                    beforeAjax:function(o){
+                        o.ajaxData = $.extends.json.param2json(o.ajaxData);
+                        o.ajaxData.cert_key_block = $("#cert_key_block").iTextarea("getValue")
+                        o.ajaxData.cert_block = $("#cert_block").iTextarea("getValue")
+                    },
+                    url:V3_API_URL + '/cert/'+(id||'')
+                }]
+            });
+        }
+
+        if(id!=null){
+            $.app.get(V3_API_URL + '/cert/'+id, null, function (data) {
+                openDlg(data.data, '证书：' + id)
+                // handler.render(data.data)
+                // $(d).dialog('setTitle', '证书：' + id)
+            });
+        }  else{
+            openDlg({id:'add'}, '新增证书')
+            // handler.render({id:'add'});
+            // $(d).dialog('setTitle', '新增证书');
+        }
+    }
+</script>
+</html>

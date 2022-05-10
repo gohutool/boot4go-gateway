@@ -1,0 +1,221 @@
+{
+  "datas": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "attributes": {
+                "tip": "域名列表",
+                "TAG": "dashboard_task_",
+                "ICON": "fa fa-desktop",
+                "acl": "",
+                "title": "域名列表"
+              },
+              "id": "1001",
+              "text": "域名列表",
+              "iconCls": "fa fa-desktop",
+              "url": "/domain/domain.html"
+            }
+          ],
+          "attributes": {
+            "tip": "域名管理",
+            "TAG": "dashboard_task_",
+            "ICON": "fa fa-desktop",
+            "acl": "",
+            "title": "域名管理"
+          },
+          "id": "1001",
+          "text": "域名管理",
+          "iconCls": "fa fa-desktop",
+          "url": ""
+        },{
+          "children": [
+            {
+              "attributes": {
+                "tip": "网关列表",
+                "TAG": "dashboard_task_",
+                "ICON": "fa fa-object-group",
+                "acl": "",
+                "title": "网关列表"
+              },
+              "id": "201",
+              "text": "网关列表",
+              "iconCls": "fa fa-object-group",
+              "url": "/domain/gateway.html"
+            },
+            {
+              "attributes": {
+                "tip": "集群列表",
+                "TAG": "dashboard_task_",
+                "ICON": "fa fa-server",
+                "acl": "",
+                "title": "集群列表"
+              },
+              "id": "2002",
+              "text": "集群列表",
+              "iconCls": "fa fa-server",
+              "url": "/domain/server.html"
+            }
+          ],
+          "attributes": {
+            "tip": "集群管理",
+            "TAG": "dashboard_task_",
+            "ICON": "fa fa-server",
+            "acl": "",
+            "title": "集群管理"
+          },
+          "id": "2001",
+          "text": "集群管理",
+          "iconCls": "fa fa-server",
+          "url": ""
+        },
+        {
+          "children": [
+            {
+              "attributes": {
+                "tip": "证书列表",
+                "ICON": "fa fa-credit-card",
+                "TAG": "dashboard_settting_info",
+                "acl": "",
+                "title": "证书列表"
+              },
+              "id": "1001",
+              "text": "证书列表",
+              "iconCls": "fa fa-credit-card",
+              "url": "/domain/certificate.html"
+            }
+          ],
+          "attributes": {
+            "action": "",
+            "tip": "证书管理",
+            "ICON": "fa fa-credit-card",
+            "TAG": "dashboard_settting_",
+            "acl": "",
+            "title": "证书管理"
+          },
+          "id": "1001",
+          "text": "证书管理",
+          "iconCls": "fa fa-credit-card",
+          "url": ""
+        }
+      ],
+      "attributes": {
+        "tip": "网关管理",
+        "TAG": "dashboard_",
+        "ICON": "fa fa-television",
+        "acl": "",
+        "title": "网关管理",
+        "EXTEND": "/profile/center/taskcount"
+      },
+      "id": "1000",
+      "text": "网关管理",
+      "iconCls": "fa fa-television"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "attributes": {
+                "action": "/html/system/company/index.html",
+                "tip": "公司信息",
+                "ICON": "fa fa-user-secret",
+                "TAG": "system_profile_company",
+                "acl": "ACCOUNT_MAN|SYSTEM_ADMIN",
+                "title": "公司信息"
+              },
+              "id": "1001",
+              "text": "公司信息",
+              "iconCls": "fa fa-user-secret",
+              "url": "/html/system/company/index.html"
+            },
+            {
+              "attributes": {
+                "action": "/html/system/department/index.html",
+                "tip": "部门管理",
+                "ICON": "fa fa-sitemap",
+                "TAG": "system_profile_department",
+                "acl": "DEPARTMENT_MAN|COMPANY_ADMIN",
+                "title": "部门管理"
+              },
+              "id": "1001",
+              "text": "部门管理",
+              "iconCls": "fa fa-sitemap",
+              "url": "/html/system/department/index.html"
+            },
+            {
+              "attributes": {
+                "action": "/html/system/employee/index.html",
+                "tip": "员工管理",
+                "ICON": "fa fa-sitemap",
+                "TAG": "system_profile_employee",
+                "acl": "DEPARTMENT_MAN|COMPANY_ADMIN",
+                "title": "员工管理"
+              },
+              "id": "1001",
+              "text": "员工管理",
+              "iconCls": "fa fa-sitemap",
+              "url": "/html/system/employee/index.html"
+            },
+            {
+              "attributes": {
+                "action": "/html/system/user/index.html",
+                "tip": "用户管理",
+                "ICON": "fa fa-home",
+                "TAG": "system_profile_user",
+                "acl": "USER_MAN|COMPANY_ADMIN",
+                "title": "用户管理"
+              },
+              "id": "1001",
+              "text": "用户管理",
+              "iconCls": "fa fa-home",
+              "url": "/html/system/user/index.html"
+            },
+            {
+              "attributes": {
+                "action": "/html/system/role/index.html",
+                "tip": "角色管理",
+                "ICON": "fa fa-sitemap",
+                "TAG": "system_profile_role",
+                "acl": "ROLE_MAN|COMPANY_ADMIN",
+                "title": "角色管理"
+              },
+              "id": "1001",
+              "text": "角色管理",
+              "iconCls": "fa fa-sitemap",
+              "url": "/html/system/role/index.html"
+            }
+          ],
+          "attributes": {
+            "action": "",
+            "tip": "组织架构",
+            "ICON": "fa fa-home",
+            "TAG": "system_profile_",
+            "acl": "",
+            "title": "组织架构"
+          },
+          "id": "1001",
+          "text": "组织架构",
+          "iconCls": "fa fa-home",
+          "url": ""
+        }
+      ],
+      "attributes": {
+        "tip": "数据统计",
+        "TAG": "system_",
+        "ICON": "fa fa-cog",
+        "acl": "",
+        "title": "数据统计"
+      },
+      "id": "1000",
+      "text": "数据统计",
+      "iconCls": "fa fa-cog"
+    }
+  ],
+  "resp_code": 0,
+  "resp_msg": "",
+  "status": 0,
+  "msg": "",
+  "api_path": null
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:jc="http://www.joinsunsoft.com">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <script src="/static/common/js/ui.js"></script>
+</head>
+
+<body>
+<div id="loading" class="loading-wrap">
+    <div class="loading-content">
+        <div class="loading-round"></div>
+        <div class="loading-dot"></div>
+    </div>
+</div>
+<script id="gatewayTmpl1" type="text/x-jquery-tmpl">
+<table id="gatewayDg"></table>
+<!-- 表格工具栏开始 -->
+<div id="gatewayDg-toolbar" class="cubeui-toolbar"
+     data-options="grid:{
+           type:'datagrid',
+           id:'gatewayDg'
+       }">
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            onClick:function(){
+                $('#gatewayDg').datagrid('reload',{})
+                $('#gateway-prefix').textbox('setValue','')
+            },
+            extend: '#gatewayDg-toolbar',
+            btnCls: 'cubeui-btn-orange',
+            iconCls: 'fa fa-refresh'
+        }">刷新</a>
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            method:'filter',
+            extend: '#gatewayDg-toolbar',
+            btnCls: 'cubeui-btn-blue',
+            iconCls: 'fa fa-refresh'
+        }">过滤</a>
+
+    <form id="gatewayDgForm" class="search-box">
+    	<input type="text" id='gateway-prefix' name="prefix" data-toggle="cubeui-textbox"
+               data-options="prompt:'Gateway实例地址',width:360">
+        <a href="javascript:void(0)"
+           data-toggle="cubeui-menubutton"
+           data-options="method:'query',
+           iconCls:'fa fa-search',
+           btnCls:'cubeui-btn-blue',
+           form:{id:'gatewayDgForm'},
+           grid:{type:'datagrid','id':'gatewayDg'}">查询</a>
+    </form>
+</div>
+<!-- 表格工具栏结束 -->
+</script>
+
+</body>
+
+<script>
+
+    new APP(function () {
+        return {
+            css: [],
+            js: [
+
+            ],
+            render: function () {
+                stop = true
+                console.log("finish")
+
+                APP.renderBody("#gatewayTmpl1", {id:"1022", name:"davidliu"})
+            }
+        }
+    });
+
+    APP.fn(function (){
+        var gatewayDg = {
+            type: 'datagrid',
+            id: 'gatewayDg'
+        };
+
+        $("#gatewayDg").iDatagrid({
+            url: V3_API_URL + '/gateway/list',
+            idField: 'server_name',
+            frozenColumns:[[
+                // {field: 'id', title: '', checkbox: true},
+                {field: 'server_name', title: 'Gateway实例', sortable: false,
+                    formatter1:$.iGrid.templateformatter('{server_name}'),
+                    width: 350},
+            ]],
+            columns: [[
+                {
+                    field: 'start_time',
+                    title: '启动时间',
+                    sortable: true,
+                    width: 220,
+                    formatter:$.iGrid.tooltipformatter()
+                },
+                {
+                    field: 'last_register_time',
+                    title: '最后注册时间',
+                    sortable: true,
+                    width: 220,
+                    formatter:$.iGrid.tooltipformatter()
+                },
+                {
+                    field: 'register_times',
+                    title: '抖动次数',
+                    sortable: true,
+                    width: 80,
+                    formatter:$.iGrid.tooltipformatter()
+                },
+                {field: 'op', title: '操作', sortable: false, width: 400, formatter:operateFormatter}
+            ]]
+        });
+
+        $("#gatewayDg").datagrid('setLocalPage');
+        // $("#gatewayDg").datagrid('enableFilter');
+    })
+
+    function operateFormatter(value, row, index) {
+        var htmlstr = "";
+
+        htmlstr += '<button class="layui-btn layui-btn-danger layui-btn-xs" onclick="openInfoDiag(\'' + row.id + '\', \''+row.server_name+'\')">详情</button>';
+        //htmlstr += '<button class="cubeui-btn-gray layui-btn layui-btn-xs" onclick="delCert(\'' + row.id + '\')">详情</button>';
+
+        return htmlstr;
+    }
+
+    function openInfoDiag(id, server_name){
+
+        $.iDialog.openDialog({
+            title: '网关['+server_name+']详情',
+            maximized:true,
+            minimizable:false,
+            width: 850,
+            height: 650,
+            render:function(opts, handler){
+                let d = this;
+                console.log("Open dialog")
+
+                if(id!=null){
+                    $.app.get(V3_API_URL + '/cert/'+id, null, function (data) {
+                        handler.render(data.data)
+                        $(d).dialog('setTitle', '证书：' + id)
+                    });
+                }  else{
+                    handler.render({id:'add'});
+                    $(d).dialog('setTitle', '新增证书');
+                }
+            },
+            href: contextpath + '/domain/certificate-detail.html?id='+id,
+            buttonsGroup: [{
+                text: '保存',
+                iconCls: 'fa fa-save',
+                reload: [{type:'datagrid', id:'gatewayDg', keepcheck:0}],
+                btnCls: 'cubeui-btn-blue',
+                handler:'ajaxForm',
+                requestType:'put',
+                postJson:true,
+                beforeAjax:function(o){
+                    o.ajaxData = $.extends.json.param2json(o.ajaxData);
+                    o.ajaxData.cert_key_block = $("#cert_key_block").iTextarea("getValue")
+                    o.ajaxData.cert_block = $("#cert_block").iTextarea("getValue")
+                },
+                url:V3_API_URL + '/cert/'+(id||'')
+            }]
+        });
+    }
+</script>
+</html>

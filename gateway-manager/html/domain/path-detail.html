@@ -1,0 +1,301 @@
+<div style="margin: 0px;">
+</div>
+
+<div data-toggle="cubeui-layout" data-options="fit:true">
+    <div data-options="region:'north',title:'',split:true"
+         style="height1:60%" class="cubeui-fluid" id="company-detail-form">
+        <fieldset>
+            <legend>基本信息(必填)</legend>
+        </fieldset>
+    <!--        <input type='hidden' id='id' name='id' value1='{{:id}}'/>-->
+    <!--        <div class="cubeui-row" id="domainIdDiv">-->
+    <!--            <div class="cubeui-col-sm12">-->
+    <!--                <label class="cubeui-form-label">ID:</label>-->
+    <!--                <div class="cubeui-input-block">-->
+    <!--                    <input type="text" id="id2" readonly name="id2" value='{{:id}}' data-toggle="cubeui-textbox"-->
+    <!--                           data-options="required:true,prompt:'域名的ID，必须填写'">-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+        <div class="cubeui-row span5">
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">请求方式:</label>
+                <div class="cubeui-input-block">
+                    <div style='width:100%;margin-bottom: 0px;margin-top: 0px;'>
+
+                        <div class="cubeui-col-sm11" style='padding-right:1px'>
+                            <input name="req_method" value='ALL'
+                                   data-toggle="cubeui-combobox"
+                                   data-options="prompt:'请求方式，必须填写',readonly:true,required:true,valueField:'code',
+                           data:[
+                           {code:'ALL', text:'ANY'},
+                           {code:'GET', text:'GET'},
+                           {code:'POST', text:'POST'},
+                           {code:'PUT', text:'PUT'},
+                           {code:'DELETE', text:'DELETE'},
+                           {code:'OPTIONS', text:'OPTIONS'},
+                           {code:'HEAD', text:'HEAD'}
+                           ]"/>
+                        </div>
+<!--                        <div class="cubeui-col-sm1" style='padding-right:1px'>-->
+<!--                            <label class="cubeui-label"><span-->
+<!--                                    class="fa fa-question-circle-o cubeui-slide-icon" title="This is the tooltip message." data-toggle="cubeui-tooltip"></span></label>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="cubeui-col-sm2 cubeui1-col-sm-offset4">
+                <label class="cubeui-form-label">私有转发:</label>
+                <div class="cubeui-input-block">
+                    <input type="text" value='1' id="private_proxy_enabled"  name="private_proxy_enabled"
+                           data-toggle="cubeui-switchbutton" data-options="value:1,width:'50px',onText:'',offText:''">
+                </div>
+            </div>
+
+
+            <div class="cubeui-col-sm4">
+                <label class="cubeui-form-label">负载均衡:</label>
+                <div class="cubeui-input-block">
+                    <input id="lb_type" name="lb_type" value='{{:lb_type}}'
+                           data-toggle="cubeui-combobox"
+                           data-options="prompt:'负载均衡类型',required:true,valueField:'code',
+                           data:[{code:'roundRobin', text:'轮询策略'},
+                           {code:'random', text:'随机策略'}]"/>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="cubeui-row span5">
+
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">匹配路径:</label>
+
+                <div class="cubeui-input-block">
+                    <div style='width:100%;margin-bottom: 0px;margin-top: 0px;'>
+                        <div class="cubeui-col-sm11" style='padding-right:1px'>
+                                <input type="text" data-toggle="cubeui-textbox" id="req_path" name="req_path"
+                                       value='{{:req_path}}' data-options="required:true,prompt:'请求路径，必须填写'">
+                        </div>
+                        <div class="cubeui-col-sm1" style='padding-right:1px'>
+                            <label class="cubeui-label  cubeui-label-icon"><span
+                                    class="fa fa-calculator cubeui-slide-icon"
+                                    title="匹配路径规则的测试" data-toggle="cubeui-tooltip" onclick="openPathPatternDiag()"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">映射描述:</label>
+                <div class="cubeui-input-block">
+                    <input type="text" id="req_name"  name="req_name"
+                           data-toggle="cubeui-textbox" value='{{:req_name}}'   data-options="required:true,prompt:'映射描述，必须填写'">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cubeui-row span5">
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">路径格式:</label>
+                <div class="cubeui-input-block">
+
+                    <div style='width:100%;margin-bottom: 0px;margin-top: 0px;'>
+                        <div class="cubeui-col-sm11" style='padding-right:1px'>
+                            <input value='{{:search_path}}' type="text" id="search_path"  name="search_path" data-toggle="cubeui-textbox"
+                                   data-options="required:false,prompt:'请求路径格式, 请求路径的进行正则转换模式'">
+                        </div>
+                        <div class="cubeui-col-sm1" style='padding-right:1px'>
+                            <label class="cubeui-label cubeui-label-icon"><span
+                                    class="fa fa-calculator cubeui-slide-icon"
+                                    title="路径格式转换规则的测试" data-toggle="cubeui-tooltip" onclick="openMatchPatternDiag()"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">转换格式:</label>
+                <div class="cubeui-input-block">
+
+                    <div style='width:100%;margin-bottom: 0px;margin-top: 0px;'>
+                        <div class="cubeui-col-sm11" style='padding-right:1px'>
+                            <input type="text" data-toggle="cubeui-textbox" name="replace_path" id="replace_path"
+                                   value='{{:replace_path}}' data-options="required:false,prompt:'转换格式，转换后的模式'">
+                        </div>
+                        <div class="cubeui-col-sm1" style='padding-right:1px'>
+                            <label class="cubeui-label cubeui-label-icon"><span
+                                    class="fa fa-calculator cubeui-slide-icon"
+                                    title="路径格式转换规则的测试" data-toggle="cubeui-tooltip"  onclick="openMatchPatternDiag()"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="cubeui-row span5">
+
+
+            <div class="cubeui-col-sm6">
+
+                <fieldset>
+                    <legend>熔断信息(选填)</legend>
+                </fieldset>
+
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm6">
+                        <label class="cubeui-form-label">请求数:</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:circuit_breaker_request}}' type="text" name="circuit_breaker_request" data-toggle="cubeui-numberspinner"
+                                   data-options="required:false,prompt:'超过请求数熔断',min:0,increment:10">
+                        </div>
+                    </div>
+
+                    <div class="cubeui-col-sm2">
+                        <label class="cubeui-form-label">开启熔断:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" value='1' id="circuit_breaker_enabled" name="circuit_breaker_enabled"
+                                   data-toggle="cubeui-switchbutton" data-options="value:1,width:'50px',onText:'',offText:''">
+                        </div>
+                    </div>
+
+                    <div class="cubeui-col-sm2">
+                        <label class="cubeui-form-label">强制熔断:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" value='1' id="circuit_breaker_force" name="circuit_breaker_force"
+                                   data-toggle="cubeui-switchbutton" data-options="value:1,width:'50px',onText:'',offText:''">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm6">
+                        <label class="cubeui-form-label">阀值百分数:</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:circuit_breaker_percent}}' type="text" name="circuit_breaker_percent" data-toggle="cubeui-numberspinner"
+                                   data-options="required:false,prompt:'超过阀值百分数熔断',min:0,max:100,increment:10">
+                        </div>
+                    </div>
+
+                    <div class="cubeui-col-sm6">
+                        <label class="cubeui-form-label">超时(ms):</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:circuit_breaker_timeout}}' type="text" name="circuit_breaker_timeout" data-toggle="cubeui-numberspinner"
+                                   data-options="required:false,prompt:'超过超时时间(毫秒)熔断',min:1000,increment:1000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm12">
+                        <label class="cubeui-form-label">自定义熔断返回消息</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:circuit_breaker_msg}}' type="text" name="circuit_breaker_msg" data-toggle="cubeui-textarea">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cubeui-col-sm6 cubeui1-col-sm-offset1">
+
+                <fieldset>
+                    <legend>限流信息(选填)</legend>
+                </fieldset>
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm2">
+                        <label class="cubeui-form-label">限流开启:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" value='{{:rate_limiter_enabled}}' checked id="rate_limiter_enabled" name="rate_limiter_enabled"
+                                   data-toggle="cubeui-switchbutton" data-options="value:true,width:'50px',onText:'',offText:''">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm6">
+                        <label class="cubeui-form-label">限流(秒):</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:rate_limiter_num}}' type="text" id="rate_limiter_num"
+                                   name="rate_limiter_num"  data-toggle="cubeui-numberspinner"
+                                   data-options="min:0,increment:10">
+                        </div>
+                    </div>
+                </div>
+
+    <!--            <div class="cubeui-row">-->
+    <!--                <div class="cubeui-col-sm12">-->
+    <!--                    <label class="cubeui-form-label">自定义限流返回消息</label>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm12">
+                        <label class="cubeui-form-label">自定义限流返回消息</label>
+                        <div class="cubeui-input-block">
+                            <input value='{{:rate_limiter_msg}}' type="text" id="rate_limiter_msg" name="rate_limiter_msg" data-toggle="cubeui-textarea">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    <!--    <div class="cubeui-row">-->
+    <!--        <div class="cubeui-col-sm2">-->
+    <!--            <label class="cubeui-form-label">私有转发:</label>-->
+    <!--            <div class="cubeui-input-block">-->
+    <!--                <input type="text" value='1' id="private_proxy_enabled"  name="private_proxy_enabled"-->
+    <!--                       data-toggle="cubeui-switchbutton" data-options="value:1,width:'50px',onText:'',offText:''">-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+        <!-- -->
+
+    </div>
+
+    <div data-options="region:'center',title:'目标列表',split:true"
+         style="height1:40%">
+        <table id="contactDg"></table>
+        <div id="contactDg-toolbar" class="cubeui-toolbar"
+             data-options="grid:{
+		           type:'datagrid',
+		           id:'contactDg'
+		       }">
+
+            <a  href="javascript:void(0)" id='add' data-toggle='cubeui-menubutton' data-options="{
+                onClick:addrow,
+                btnCls: 'cubeui-btn-green',
+                iconCls: 'fa fa-plus'
+                }">添加</a>
+
+            <a  href="javascript:void(0)" id='save' data-toggle='cubeui-menubutton' data-options="{
+                onClick: save,
+                btnCls: 'cubeui-btn-blue',
+                iconCls: 'fa fa-save'
+                }">确定</a>
+
+            <a  href="javascript:void(0)" id='cancel' data-toggle='cubeui-menubutton' data-options="{
+                onClick:cancel,
+                btnCls: 'cubeui-btn-black',
+                iconCls: 'fa fa-close'
+                }">取消</a>
+
+            <a  href="javascript:void(0)" id='remove' data-toggle='cubeui-menubutton' data-options="{
+                onClick:deleterow,
+                btnCls: 'cubeui-btn-red',
+                iconCls: 'fa fa-trash'
+                }">删除</a>
+        </div>
+    </div>
+
+</div>
+

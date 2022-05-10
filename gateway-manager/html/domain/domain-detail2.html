@@ -1,0 +1,140 @@
+<div style="margin: 0px;">
+</div>
+
+<div data-toggle="cubeui-layout" data-options="fit:true">
+    <div data-options="region:'north',title:'',split:true"
+         style="height1:60%" class="cubeui-fluid" id="company-detail-form">
+        <fieldset>
+            <legend>基本信息(必填)</legend>
+        </fieldset>
+<!--        <input type='hidden' id='id' name='id' value1='{{:id}}'/>-->
+<!--        <div class="cubeui-row" id="domainIdDiv">-->
+<!--            <div class="cubeui-col-sm12">-->
+<!--                <label class="cubeui-form-label">ID:</label>-->
+<!--                <div class="cubeui-input-block">-->
+<!--                    <input type="text" id="id2" readonly name="id2" value='{{:id}}' data-toggle="cubeui-textbox"-->
+<!--                           data-options="required:true,prompt:'域名的ID，必须填写'">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm12">
+                <label class="cubeui-form-label">名称:</label>
+                <div class="cubeui-input-block">
+                    <input type="text" data-toggle="cubeui-textbox" id="domain_name" name="domain_name"
+                           value='{{:domain_name}}' data-options="required:true,prompt:'域名的名称，必须填写'">
+                </div>
+            </div>
+        </div>
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm12">
+                <label class="cubeui-form-label">域名:</label>
+                <div class="cubeui-input-block">
+                    <input type="text" data-toggle="cubeui-textbox" id="domain_url" name="domain_url"
+                           value='{{:domain_url}}' data-options="required:true,prompt:'域名+端口，必须填写'">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm12">
+                <label class="cubeui-form-label">备注信息</label>
+                <div class="cubeui-input-block">
+                    <input value='{{:demo}}' type="text" id="demo" name="demo" data-toggle="cubeui-textarea">
+                </div>
+            </div>
+        </div>
+
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm6">
+                <label class="cubeui-form-label">负载均衡:</label>
+                <div class="cubeui-input-block">
+                    <input id="lb_type" name="lb_type" value='{{:lb_type}}'
+                           data-toggle="cubeui-combobox"
+                           data-options="prompt:'负载均衡类型',required:true,valueField:'code',
+                           data:[{code:'roundRobin', text:'轮询策略'},
+                           {code:'random', text:'随机策略'}]"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- -->
+        <fieldset>
+            <legend>限流信息(选填)</legend>
+        </fieldset>
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm2">
+                <label class="cubeui-form-label">限流开启:</label>
+                <div class="cubeui-input-block">
+                    <input type="text" value='{{:rate_limiter_enabled}}' checked id="rate_limiter_enabled" name="rate_limiter_enabled"
+                           data-toggle="cubeui-switchbutton" data-options="value:true">
+                </div>
+            </div>
+
+            <div class="cubeui-col-sm3">
+                <label class="cubeui-form-label">限流(秒):</label>
+                <div class="cubeui-input-block">
+                    <input value='{{:rate_limiter_num}}' type="text" id="rate_limiter_num"
+                           name="rate_limiter_num"  data-toggle="cubeui-numberspinner"
+                           data-options="min:0,increment:10">
+                </div>
+            </div>
+        </div>
+
+        <div class="cubeui-row">
+            <div class="cubeui-col-sm12">
+                <label class="cubeui-form-label">自定义限流返回消息</label>
+                <div class="cubeui-input-block">
+                    <input value='{{:rate_limiter_msg}}' type="text" id="rate_limiter_msg" name="rate_limiter_msg" data-toggle="cubeui-textarea">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div data-options="region:'center',title:'目标列表',split:true"
+         style="height1:40%">
+        <table id="contactDg"></table>
+        <div id="contactDg-toolbar" class="cubeui-toolbar"
+             data-options="grid:{
+		           type:'datagrid',
+		           id:'contactDg'
+		       }">
+
+            <a  href="javascript:void(0)" id='add' data-toggle='cubeui-menubutton' data-options="{
+                onClick:addrow,
+                btnCls: 'cubeui-btn-green',
+                iconCls: 'fa fa-plus'
+                }">添加</a>
+
+            <a  href="javascript:void(0)" id='save' data-toggle='cubeui-menubutton' data-options="{
+                onClick: save,
+                btnCls: 'cubeui-btn-blue',
+                iconCls: 'fa fa-save'
+                }">确定</a>
+
+            <a  href="javascript:void(0)" id='cancel' data-toggle='cubeui-menubutton' data-options="{
+                onClick:cancel,
+                btnCls: 'cubeui-btn-black',
+                iconCls: 'fa fa-close'
+                }">取消</a>
+
+            <a  href="javascript:void(0)" id='remove' data-toggle='cubeui-menubutton' data-options="{
+                onClick:deleterow,
+                btnCls: 'cubeui-btn-red',
+                iconCls: 'fa fa-trash'
+                }">删除</a>
+        </div>
+    </div>
+</div>
+<template-func>
+
+    console.log("url : " + window.location.href)
+    console.log("id : " + getUrlParam("id"))
+
+    //renderHandler.render({test:"Hello world"})
+
+    //$("#userAddDialog").dialog('setTitle', "11111111111111111111")
+</template-func>

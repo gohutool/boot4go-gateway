@@ -1,0 +1,42 @@
+<div style="margin: 0px;">
+</div>
+
+<div class="cubeui-fluid">
+    <fieldset>
+        <legend>基本信息(必填)</legend>
+    </fieldset>
+
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">域名:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-textbox" name="ser_name"
+                       value='{{:ser_name}}' data-options="required:true,prompt:'域名，必须填写'">
+            </div>
+        </div>
+    </div>
+
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">证书cert:</label>
+            <div class="cubeui-input-block">
+                <input value='{{:cert_block}}' type="text" id="cert_block"  name="cert_block" data-toggle="cubeui-textarea"
+                       data-options="required:true,height:180,prompt:'证书cert，必须填写'">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cubeui-row">
+        <div class="cubeui-col-sm12">
+            <label class="cubeui-form-label">证书key:</label>
+            <div class="cubeui-input-block">
+                <input type="text" data-toggle="cubeui-textarea" id="cert_key_block"  name="cert_key_block"
+                       value='{{:cert_key_block}}' data-options="height:180,required:true,prompt:'证书key，必须填写'">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

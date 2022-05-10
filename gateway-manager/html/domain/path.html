@@ -1,0 +1,39 @@
+
+<table id="pathDg"></table>
+<!-- 表格工具栏开始 -->
+<div id="pathDg-toolbar" class="cubeui-toolbar"
+     data-options="grid:{
+           type:'datagrid',
+           id:'pathDg'
+       }">
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            method1: 'openDialog',
+            onClick:function(){
+                openPathDetailDiag('{{:domainId}}',null);
+            },
+            extend: '#pathDg-toolbar',
+            btnCls: 'cubeui-btn-orange',
+            iconCls: 'fa fa-plus'
+        }">新增</a>
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            onClick:function(){
+                refreshPathList('{{:domainId}}');
+            },
+            extend: '#pathDg-toolbar',
+            btnCls: 'cubeui-btn-blue',
+            iconCls: 'fa fa-refresh'
+        }">刷新</a>
+<!--    <form id="queryForm2" class="search-box">-->
+<!--    	<input type="text" name="email" data-toggle="cubeui-textbox"-->
+<!--               data-options="id:'email',prompt:'ID查询',width:360">-->
+<!--        <a href="javascript:void(0)"-->
+<!--           data-toggle="cubeui-menubutton"-->
+<!--           data-options="method:'query',-->
+<!--           iconCls:'fa fa-search',-->
+<!--           btnCls:'cubeui-btn-blue',-->
+<!--           form:{id:'queryForm2'},-->
+<!--           grid:{type:'datagrid','id':'pathDg'}">查询</a>-->
+<!--    </form>-->
+</div>
