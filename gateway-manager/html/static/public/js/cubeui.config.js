@@ -85,7 +85,7 @@ var firstPathName = window.location.pathname.split("/")[1];
 /* 静态演示中获取contextPath，动态演示非必须 结束 */
 
 var myConfig = {
-	li1:"3F87ADA19CA03DFB80633D674464E4A6BF8E3278EA5E30AC142DEDC5444801842EED95DB9EABCD9F10E5363E3FA57554421AA90E079FA326B6494F812AD13E79",
+	li1:"",
     config: {
         pkName: 'uuid', //数据表主键名，用于批量提交数据时获取主键值
         singleQuotesParam: true, //是否对批量提交表格选中记录的参数值使用单引号，默认为false，true:'123','456'，false:123,456

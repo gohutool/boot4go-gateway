@@ -6,7 +6,9 @@ import (
 	. "gateway-manager/util"
 	"github.com/alecthomas/kingpin"
 	. "github.com/gohutool/boot4go-etcd/client"
+	util4go "github.com/gohutool/boot4go-util"
 	routing "github.com/qiangxue/fasthttp-routing"
+	"io/ioutil"
 	"net"
 	"os"
 	"os/signal"
@@ -43,10 +45,14 @@ func main() {
 	issuer_flag := app.Flag("issuer", "Issuer: token's issuer.").Short('i').Default(DEFAULT_ISSUER).String()
 	expired_flag := app.Flag("token_expire", "Token_expire: many hour(s) token will expire.").Short('e').Default("24").Int()
 
+	li_flag := app.Flag("license", "License: CubeUI License.").Default("").String()
+
 	app.HelpFlag.Short('h')
 	app.Version(SERVER_VERSION)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
+
+	initLicenseFile(*li_flag)
 
 	l, err := net.Listen("tcp", *addr_flag)
 	if err != nil {
@@ -117,4 +123,20 @@ func main() {
 
 	l.Close()
 	fmt.Println("Server is close")
+}
+
+func initLicenseFile(li string) {
+	var txt string
+	if util4go.IsEmpty(li) {
+		txt = ""
+	} else {
+		txt = `
+				myConfig.li="%v";
+			`
+		txt = fmt.Sprintf(txt, li)
+	}
+	err2 := ioutil.WriteFile("./html/static/public/js/cubeui.li.js", []byte(txt), 0666) //写入文件(字节数组)
+	if err2 != nil {
+		panic("License check error:" + err2.Error())
+	}
 }
