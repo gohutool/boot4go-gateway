@@ -42,7 +42,7 @@ func (u *userHandler) InitRouter(router *routing.Router, routerGroup *routing.Ro
 	routerGroup.Get("/user/<user-id>", TokenInterceptorHandler(u.GetUser))
 	routerGroup.Delete("/user/<user-id>", TokenInterceptorHandler(u.DelUser))
 	routerGroup.Put("/user/profile", TokenInterceptorHandler(u.SaveProfile))
-	routerGroup.Get("/user/portal", TokenInterceptorHandler(u.Portal))
+	routerGroup.Get("/portal/piereport", TokenInterceptorHandler(u.PiePortal))
 	routerGroup.Get("/portal/linereport", TokenInterceptorHandler(u.LineMetric))
 	routerGroup.Get("/portal/barreport", TokenInterceptorHandler(u.BarMetric))
 
@@ -165,6 +165,11 @@ func (u *userHandler) SaveUser(context *routing.Context) error {
 		oUser = o.(*AdminUser)
 
 		if oUser.UserName != username {
+
+			if oUser.UserName == "ginghan" {
+				panic("系统保留用户名不能修改")
+			}
+
 			o = EtcdClient.KeyObject(userKey(MD5(username)), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
 			if o != nil {
 				panic("用户" + username + "已经存在")
@@ -183,10 +188,10 @@ func (u *userHandler) SaveUser(context *routing.Context) error {
 	err := CreateAdmin(username, password)
 
 	if err != nil {
-		panic("创建用户失败:" + err.Error())
+		panic("保存用户失败:" + err.Error())
 	}
 
-	Result.Success("", "OK").Response(context.RequestCtx)
+	Result.Success("", "保存用户成功").Response(context.RequestCtx)
 
 	return nil
 }
@@ -229,7 +234,7 @@ func (u *userHandler) DelUser(context *routing.Context) error {
 
 	EtcdClient.Delete(userKey(id), 0)
 
-	Result.Success("", "OK").Response(context.RequestCtx)
+	Result.Success("", "删除用户成功").Response(context.RequestCtx)
 
 	return nil
 }
@@ -284,7 +289,7 @@ func userKey(username string) string {
 	return fmt.Sprintf(ADMIN_USER_DATA_PATH, username)
 }
 
-func (u *userHandler) Portal(context *routing.Context) error {
+func (u *userHandler) PiePortal(context *routing.Context) error {
 	Logger.Debug("%v", "Portal")
 
 	domainCount := DomainHandler.GetDomainCount()

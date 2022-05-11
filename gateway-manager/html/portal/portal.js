@@ -1,7 +1,7 @@
 function renderPage(){
     console.log("finish")
 
-    $.app.get(V3_API_URL + '/user/portal', null, function (data) {
+    $.app.get(V3_API_URL + '/portal/piereport', null, function (data) {
         //$("#pathDg").datagrid("loadData", data.data.list);
 
         APP.renderBody("#tmpl1", data.data)
@@ -11,7 +11,7 @@ function renderPage(){
 
 function refreshPieChart(){
 
-    $.app.get(V3_API_URL + '/user/portal', null, function (data) {
+    $.app.get(V3_API_URL + '/portal/piereport', null, function (data) {
         //$("#pathDg").datagrid("loadData", data.data.list);
         $('#pathCount').text(data.data.pathCount)
         $('#serverCount').text(data.data.serverCount)
