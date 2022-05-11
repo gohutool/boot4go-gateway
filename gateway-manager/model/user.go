@@ -1,5 +1,9 @@
 package model
 
+import (
+	. "github.com/gohutool/boot4go-fastjson"
+)
+
 /**
 * golang-sample源代码，版权归锦翰科技（深圳）有限公司所有。
 * <p>
@@ -17,4 +21,12 @@ type AdminUser struct {
 	UserName string
 	Password string
 	Salt     string
+}
+
+func (d *AdminUser) Unmarshal(value *Value) error {
+	d.UserId = value.GetString("UserId")
+	d.UserName = value.GetString("UserName")
+	d.Password = value.GetString("Password")
+	d.Salt = value.GetString("Salt")
+	return nil
 }

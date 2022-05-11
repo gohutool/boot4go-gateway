@@ -200,6 +200,12 @@ func GetDomainPaths() []any {
 	return domainPaths
 }
 
+func GetUsers() []any {
+	users := client.EtcdClient.GetKeyObjectsWithPrefix(ADMIN_USER_DATA_PREFIX, reflect.TypeOf((*AdminUser)(nil)), nil,
+		0, 0, ReadTimeout)
+	return users
+}
+
 const (
 	METRICS_SUMMARY_DATA_PREFIX = DB_PREFIX + "/metrics-summary-data/"
 

@@ -10,6 +10,7 @@ import (
 	. "github.com/gohutool/boot4go-util/jwt"
 	routing "github.com/qiangxue/fasthttp-routing"
 	"reflect"
+	"strings"
 )
 
 /**
@@ -35,8 +36,12 @@ func (u *userHandler) InitRouter(router *routing.Router, routerGroup *routing.Ro
 	router.Get("/logout", u.Logout)
 
 	routerGroup.Get("/user/menu", TokenInterceptorHandler(u.MenuTree))
-	routerGroup.Put("/user/pwd", TokenInterceptorHandler(u.MenuTree))
-	routerGroup.Put("/user/profile", TokenInterceptorHandler(u.MenuTree))
+	routerGroup.Get("/user/list", TokenInterceptorHandler(u.ListUser))
+	routerGroup.Put("/user/pwd", TokenInterceptorHandler(u.SavePwd))
+	routerGroup.Put("/user/<user-id>", TokenInterceptorHandler(u.SaveUser))
+	routerGroup.Get("/user/<user-id>", TokenInterceptorHandler(u.GetUser))
+	routerGroup.Delete("/user/<user-id>", TokenInterceptorHandler(u.DelUser))
+	routerGroup.Put("/user/profile", TokenInterceptorHandler(u.SaveProfile))
 	routerGroup.Get("/user/portal", TokenInterceptorHandler(u.Portal))
 	routerGroup.Get("/portal/linereport", TokenInterceptorHandler(u.LineMetric))
 	routerGroup.Get("/portal/barreport", TokenInterceptorHandler(u.BarMetric))
@@ -96,10 +101,175 @@ func (u *userHandler) MenuTree(context *routing.Context) error {
 	return nil
 }
 
-func (u *userHandler) SavePwd(context *routing.Context) error {
-	Logger.Debug("%v", "SavePwd")
+func (u *userHandler) GetUser(context *routing.Context) error {
+	id := context.Param("user-id")
+
+	if IsEmpty(id) {
+		panic("用户信息不正确")
+	}
+
+	o := EtcdClient.KeyObject(userKey(id), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+	if o == nil {
+		panic("用户" + id + "不存在")
+	}
+
+	Result.Success(o, "OK").Response(context.RequestCtx)
+	return nil
+}
+
+func (u *userHandler) SaveUser(context *routing.Context) error {
+
+	id := context.Param("user-id")
+
+	username := GetParams(context.RequestCtx, "username", "")
+	password := GetParams(context.RequestCtx, "password", "")
+	password2 := GetParams(context.RequestCtx, "password2", "")
+
+	if IsEmpty(username) || IsEmpty(password) {
+		Result.Fail("请填写登录用户名和用户密码").Response(context.RequestCtx)
+		return nil
+	}
+
+	if password2 != password {
+		Result.Fail("密码不一致").Response(context.RequestCtx)
+		return nil
+	}
+
+	username = strings.TrimSpace(username)
+
+	userid := GetUserId(context)
+
+	if IsEmpty(userid) {
+		panic("登录信息不正确")
+	}
+
+	o := EtcdClient.KeyObject(userKey(userid), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+	if o == nil {
+		panic("登录信息不正确")
+	}
+
+	user := o.(*AdminUser)
+
+	if user.UserName != "ginghan" {
+		panic("用户权限不正确")
+	}
+
+	if !IsEmpty(id) {
+		var oUser *AdminUser
+		o := EtcdClient.KeyObject(userKey(id), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+		if o == nil {
+			panic("用户" + id + "不存在")
+		}
+		oUser = o.(*AdminUser)
+
+		if oUser.UserName != username {
+			o = EtcdClient.KeyObject(userKey(MD5(username)), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+			if o != nil {
+				panic("用户" + username + "已经存在")
+			} else {
+				EtcdClient.Delete(userKey(id), 0)
+			}
+		}
+	} else {
+		o := EtcdClient.KeyObject(userKey(MD5(username)), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+		if o != nil {
+			panic("用户" + username + "已经存在")
+		}
+	}
+
+	err := CreateAdmin(username, password)
+
+	if err != nil {
+		panic("创建用户失败:" + err.Error())
+	}
 
 	Result.Success("", "OK").Response(context.RequestCtx)
+
+	return nil
+}
+
+func (u *userHandler) DelUser(context *routing.Context) error {
+	userid := GetUserId(context)
+
+	if IsEmpty(userid) {
+		panic("登录信息不正确")
+	}
+
+	o := EtcdClient.KeyObject(userKey(userid), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+	if o == nil {
+		panic("登录信息不正确")
+	}
+
+	user := o.(*AdminUser)
+
+	if user.UserName != "ginghan" {
+		panic("用户权限不正确")
+	}
+
+	id := context.Param("user-id")
+	if IsEmpty(id) {
+		panic("用户信息不存在")
+	}
+
+	o = EtcdClient.KeyObject(userKey(id), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+	if o == nil {
+		panic("用户" + id + "不存在")
+	}
+
+	user = o.(*AdminUser)
+
+	if user.UserName == "ginghan" {
+		panic("系统用户不能删除")
+	}
+
+	EtcdClient.Delete(userKey(id), 0)
+
+	Result.Success("", "OK").Response(context.RequestCtx)
+
+	return nil
+}
+
+func (u *userHandler) SavePwd(context *routing.Context) error {
+	Logger.Debug("%v", "SavePwd")
+	password := string(context.FormValue("password"))
+
+	userid := GetUserId(context)
+
+	if IsEmpty(userid) {
+		panic("登录信息不正确")
+	}
+	if IsEmpty(password) {
+		panic("登录密码不能为空")
+	}
+
+	o := EtcdClient.KeyObject(userKey(userid), reflect.TypeOf((*AdminUser)(nil)), ReadTimeout)
+
+	if o == nil {
+		panic("登录信息不正确")
+	}
+
+	user := o.(*AdminUser)
+	user.Password = SaltMd5(password, user.Salt)
+
+	_, err := EtcdClient.PutValue(fmt.Sprintf(ADMIN_USER_DATA_PATH, userid), user, WriteTimeout)
+
+	if err != nil {
+		panic("密码修改失败:" + err.Error())
+	}
+
+	Result.Success("", "OK").Response(context.RequestCtx)
+	return nil
+}
+
+func (u *userHandler) ListUser(context *routing.Context) error {
+	Logger.Debug("%v", "SavePwd")
+
+	Result.Success(PageResultDataBuilder.New().Data(GetUsers()).Build(), "OK").Response(context.RequestCtx)
 	return nil
 }
 

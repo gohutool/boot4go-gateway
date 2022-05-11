@@ -118,98 +118,42 @@
           "children": [
             {
               "attributes": {
-                "action": "/html/system/company/index.html",
-                "tip": "公司信息",
-                "ICON": "fa fa-user-secret",
-                "TAG": "system_profile_company",
-                "acl": "ACCOUNT_MAN|SYSTEM_ADMIN",
-                "title": "公司信息"
-              },
-              "id": "1001",
-              "text": "公司信息",
-              "iconCls": "fa fa-user-secret",
-              "url": "/html/system/company/index.html"
-            },
-            {
-              "attributes": {
-                "action": "/html/system/department/index.html",
-                "tip": "部门管理",
-                "ICON": "fa fa-sitemap",
-                "TAG": "system_profile_department",
-                "acl": "DEPARTMENT_MAN|COMPANY_ADMIN",
-                "title": "部门管理"
-              },
-              "id": "1001",
-              "text": "部门管理",
-              "iconCls": "fa fa-sitemap",
-              "url": "/html/system/department/index.html"
-            },
-            {
-              "attributes": {
-                "action": "/html/system/employee/index.html",
-                "tip": "员工管理",
-                "ICON": "fa fa-sitemap",
-                "TAG": "system_profile_employee",
-                "acl": "DEPARTMENT_MAN|COMPANY_ADMIN",
-                "title": "员工管理"
-              },
-              "id": "1001",
-              "text": "员工管理",
-              "iconCls": "fa fa-sitemap",
-              "url": "/html/system/employee/index.html"
-            },
-            {
-              "attributes": {
-                "action": "/html/system/user/index.html",
-                "tip": "用户管理",
-                "ICON": "fa fa-home",
+                "action": "/domain/user.html",
+                "tip": "用户列表",
+                "ICON": "fa fa-user-circle-o",
                 "TAG": "system_profile_user",
                 "acl": "USER_MAN|COMPANY_ADMIN",
-                "title": "用户管理"
+                "title": "用户列表"
               },
               "id": "1001",
-              "text": "用户管理",
-              "iconCls": "fa fa-home",
-              "url": "/html/system/user/index.html"
-            },
-            {
-              "attributes": {
-                "action": "/html/system/role/index.html",
-                "tip": "角色管理",
-                "ICON": "fa fa-sitemap",
-                "TAG": "system_profile_role",
-                "acl": "ROLE_MAN|COMPANY_ADMIN",
-                "title": "角色管理"
-              },
-              "id": "1001",
-              "text": "角色管理",
-              "iconCls": "fa fa-sitemap",
-              "url": "/html/system/role/index.html"
+              "text": "用户列表",
+              "iconCls": "fa fa-user-circle-o",
+              "url": "/domain/user.html"
             }
           ],
           "attributes": {
             "action": "",
-            "tip": "组织架构",
-            "ICON": "fa fa-home",
+            "tip": "用户管理",
+            "ICON": "fa fa-user-circle",
             "TAG": "system_profile_",
             "acl": "",
-            "title": "组织架构"
+            "title": "用户管理"
           },
           "id": "1001",
-          "text": "组织架构",
-          "iconCls": "fa fa-home",
+          "text": "用户管理",
+          "iconCls": "fa fa-user-circle",
           "url": ""
         }
       ],
       "attributes": {
-        "tip": "数据统计",
+        "tip": "系统设置",
         "TAG": "system_",
         "ICON": "fa fa-cog",
         "acl": "",
-        "title": "数据统计"
+        "title": "系统设置"
       },
       "id": "1000",
-      "text": "数据统计",
+      "text": "系统设置",
       "iconCls": "fa fa-cog"
     }
   ],

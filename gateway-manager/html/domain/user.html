@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:jc="http://www.joinsunsoft.com">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <script src="/static/common/js/ui.js"></script>
+</head>
+
+<body>
+<div id="loading" class="loading-wrap">
+    <div class="loading-content">
+        <div class="loading-round"></div>
+        <div class="loading-dot"></div>
+    </div>
+</div>
+<script id="userTmpl1" type="text/x-jquery-tmpl">
+<table id="userDg"></table>
+<!-- 表格工具栏开始 -->
+<div id="userDg-toolbar" class="cubeui-toolbar"
+     data-options="grid:{
+           type:'datagrid',
+           id:'userDg'
+       }">
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            method1: 'openDialog',
+            onClick:function(){
+                openUserDiag();
+            },
+            extend: '#productDg-toolbar',
+            btnCls: 'cubeui-btn-blue',
+            iconCls: 'fa fa-plus'
+        }">新增</a>
+
+    <a  href="javascript:void(0)" data-toggle='cubeui-menubutton' data-options="{
+            onClick:function(){
+                $('#userDg').datagrid('reload',{})
+                $('#user-prefix').textbox('setValue','')
+            },
+            extend: '#userDg-toolbar',
+            btnCls: 'cubeui-btn-orange',
+            iconCls: 'fa fa-refresh'
+        }">刷新</a>
+
+
+</div>
+<!-- 表格工具栏结束 -->
+</script>
+
+</body>
+
+<script>
+
+    new APP(function () {
+        return {
+            css: [],
+            js: [
+
+            ],
+            render: function () {
+                stop = true
+                console.log("finish")
+
+                APP.renderBody("#userTmpl1", {id:"1022", name:"davidliu"})
+            }
+        }
+    });
+
+    APP.fn(function (){
+        var userDg = {
+            type: 'datagrid',
+            id: 'userDg'
+        };
+
+        $("#userDg").iDatagrid({
+            url: V3_API_URL + '/user/list',
+            idField: 'UserId',
+            remoteSort:false,
+            frozenColumns:[[
+                // {field: 'id', title: '', checkbox: true},
+                {field: 'UserId', title: 'ID', sortable: true,
+                    formatter1:$.iGrid.templateformatter('{UserId}'),
+                    width: 350},
+            ]],
+            columns: [[
+                {
+                    field: 'UserName',
+                    title: '用户',
+                    sortable: true,
+                    width: 360,
+                    formatter:$.iGrid.tooltipformatter()
+                },
+                {
+                    field: 'UserName1',
+                    title: '系统用户',
+                    sortable: false,
+                    width: 80,
+                    formatter:$.iGrid.evalconditionformatter([
+                            'rowData[\'UserName\']=="ginghan"'],
+                        ['<span class=\"cube-label cube-label-orange\">系统保留</span>'], '')
+                },
+                {field: 'op', title: '操作', sortable: false, width: 400, formatter:operateFormatter}
+            ]]
+        });
+
+        $("#userDg").datagrid('setLocalPage');
+    })
+
+    function operateFormatter(value, row, index) {
+        var htmlstr = "";
+
+        htmlstr += '<button class="cubeui-btn-gray layui-btn layui-btn-xs" onclick="openUserDiag(\'' + row.UserId + '\')">修改</button>';
+        htmlstr += '<button class="layui-btn layui-btn-danger layui-btn-xs" onclick="delUser(\'' + row.UserId + '\')">删除</button>';
+
+        return htmlstr;
+    }
+
+    function delUser(id){
+        $.app.confirm(null, "确认删除用户"+id+", 用户删除后不能恢复?", function (){
+            $.app.deleteJson(V3_API_URL + '/user/'+id, null, function (data) {
+                $.app.show(data.msg);
+                $('#userDg').datagrid('reload')
+            })
+        })
+    }
+
+    function openUserDiag(id){
+
+        let title = "新增用户"
+
+        if (id && id != "") {
+            title = '修改用户['+id+']'
+        }
+
+        $.iDialog.openDialog({
+            title: title,
+            minimizable:false,
+            width: 600,
+            height: 350,
+            content: `
+            <div style="margin: 0px;">
+            </div>
+            <div class="cubeui-fluid" id="company-detail-form">
+                <div class="cubeui-row">
+                    <div class="cubeui-col-sm11">
+                        <label class="cubeui-form-label">用户名:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" data-toggle="cubeui-textbox" name="username"
+                                   value='{{:username}}' data-options="required: true,validType: ['length[3,50]'], prompt:'用户名，必须填写'">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cubeui-row">
+
+                    <div class="cubeui-col-sm11">
+                        <label class="cubeui-form-label">密码:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" data-toggle="cubeui-passwordbox" id="password1"  name="password"
+                                   value='{{:password}}' data-options="required: true,validType: ['length[6,50]'], prompt:'密码，必须填写'">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cubeui-row">
+
+                    <div class="cubeui-col-sm11">
+                        <label class="cubeui-form-label">密码:</label>
+                        <div class="cubeui-input-block">
+                            <input type="text" data-toggle="cubeui-passwordbox"  name="password2"
+                                   value='{{:password2}}' data-options="
+                                   required: true,validType: ['length[6,50]','equals[\\\'#password1\\\']'], prompt:'密码，必须填写'
+                                   ">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            `,
+            render:function(opts, handler){
+                let d = this;
+                console.log("Open dialog")
+
+                if(id!=null){
+                    $.app.get(V3_API_URL + '/user/'+id, null, function (data) {
+                        handler.render({
+                            username : data.data.UserName,
+                            password : data.data.Password
+                        })
+                        $(d).dialog('setTitle', title)
+                    });
+                }  else{
+                    handler.render({id:''});
+                    $(d).dialog('setTitle', title);
+                }
+            },
+            buttonsGroup: [{
+                text: '保存',
+                iconCls: 'fa fa-save',
+                reload: [{type:'datagrid', id:'userDg', keepcheck:0}],
+                btnCls: 'cubeui-btn-blue',
+                handler:'ajaxForm',
+                requestType:'put',
+                url:V3_API_URL + '/user/'+(id||'')
+            }]
+        });
+    }
+</script>
+</html>

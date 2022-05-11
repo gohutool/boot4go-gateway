@@ -460,3 +460,17 @@ a.cubeui-link{
 }
 
 .cubeui-slide-icon:hover{text-decoration: none;}
+
+.auto-width{
+    width: auto;
+}
+
+.margin-left-0{
+    margin-left: 0px;
+}
+.layui-btn-xs{
+    padding: 0 10px!important;
+}
+.auto-height{
+    height: auto;
+}

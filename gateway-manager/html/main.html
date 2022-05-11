@@ -62,66 +62,18 @@
         <span
                 style="float:right; padding-right: 10px; height: 70px; line-height: 70px;">
 
-				<div style="display1:none" id='quickquery-div'>
-	        		<input type="text" id="quickquery" data-toggle="cubeui-combogrid" data-options="
-		                	prompt:'输入单号，快速查找',
-		                	idField:'ID',
-		                	hasDownArrow:false,
-		                    width:240,
-			               textField:'NAME',
-			               mode:'remote',
-			               onChange:function(nv, ov){},
-			               onSelect:function(){},
-			               panelWidth:500,
-			               columns:[[
-			                       {field: 'NAME', title: '供应商名称', width:150},
-			                       {field: 'NO', title: '供应商编号', width:150}
-			                   ]]
-		                	">
-				</div>
-
             <a href="javascript:void(0)"
                 id="mb3" data-toggle="cubeui-menubutton"
                 data-options="menu:'#mm3',iconCls:'fa fa-cog',hasDownArrow:true"
                 style="color: #fff;">设置</a>
 				<div id="mm3" style="width: 74px;">
-					<div data-options="iconCls:'fa fa-info-circle'"
-                         onclick="javascript:modifyProfile(0)">个人信息</div>
-					<div class="menu-sep"></div>
+<!--					<div data-options="iconCls:'fa fa-info-circle'"-->
+<!--                         onclick="javascript:modifyProfile(0)">个人信息</div>-->
+<!--					<div class="menu-sep"></div>-->
 					<div data-options="iconCls:'fa fa-key'"
                          onclick="javascript:modifyPwd(0)">修改密码</div>
-				</div>| <div style='display:none'><a href="javascript:void(0)" id="mb2"
-                                                     data-toggle="cubeui-menubutton"
-                                                     data-options="menu:'#mm2',iconCls:'fa fa-tree',hasDownArrow:true"
-                                                     style="color: #fff;">主题</a> | </div>
-				<div id="mm2" style="width: 180px;">
-					<div data-options="iconCls:'fa fa-tree blue'"
-                         onclick="changeTheme('bluelight')">默认主题</div>
-					<div data-options="iconCls:'fa fa-tree'"
-                         onclick="changeTheme('black')">黑色主题</div>
-					<div data-options="iconCls:'fa fa-tree'"
-                         onclick="changeTheme('blacklight')">黑色主题-亮</div>
-					<div data-options="iconCls:'fa fa-tree red'"
-                         onclick="changeTheme('red')">红色主题</div>
-					<div data-options="iconCls:'fa fa-tree red'"
-                         onclick="changeTheme('redlight')">红色主题-亮</div>
-					<div data-options="iconCls:'fa fa-tree green'"
-                         onclick="changeTheme('green')">绿色主题</div>
-					<div data-options="iconCls:'fa fa-tree green'"
-                         onclick="changeTheme('greenlight')">绿色主题-亮</div>
-					<div data-options="iconCls:'fa fa-tree purple'"
-                         onclick="changeTheme('purple')">紫色主题</div>
-					<div data-options="iconCls:'fa fa-tree purple'"
-                         onclick="changeTheme('purplelight')">紫色主题-亮</div>
-					<div data-options="iconCls:'fa fa-tree blue'"
-                         onclick="changeTheme('blue')">蓝色主题</div>
-					<div data-options="iconCls:'fa fa-tree blue'"
-                         onclick="changeTheme('bluelight')">蓝色主题-亮</div>
-					<div data-options="iconCls:'fa fa-tree orange'"
-                         onclick="changeTheme('yellow')">橙色主题</div>
-					<div data-options="iconCls:'fa fa-tree orange'"
-                         onclick="changeTheme('yellowlight')">橙色主题-亮</div>
-				</div> <a href="javascript:void(0)" onclick="logout()"
+				</div>|
+				<a href="javascript:void(0)" onclick="logout()"
                           data-toggle="cubeui-menubutton"
                           data-options="iconCls:'fa fa-sign-out',hasDownArrow:false"
                           style="color: #fff;">注销</a>

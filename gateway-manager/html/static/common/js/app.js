@@ -4373,6 +4373,9 @@ $.fn.combobox.defaults.onShowPanel = function(){
 	(c && !c.url && c.url2) && (c.url = c.url2, $(this).combobox('reload'));
 };
 
+$.messager.defaults = $.extend({}, $.messager.defaults, {
+	width: 450,
+});
 
 /**
  * delegate dialog onopen
