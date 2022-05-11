@@ -286,7 +286,7 @@ function initPathList(data){
                 sortable: true, formatter:$.iGrid.tooltipformatter()},
             {field: 'req_name', title: '映射描述',  width:240,
                 sortable: true, formatter:$.iGrid.tooltipformatter()},
-            {field: 'op', title: '操作', sortable: false, width: 100, formatter:wrapPathOperate(data.data.domainId)},
+            {field: 'op', title: '操作', sortable: false, width: 120, formatter:wrapPathOperate(data.data.domainId)},
         ]],
         columns: [[
             {field: 'req_path', title: '请求路径',width:120,
