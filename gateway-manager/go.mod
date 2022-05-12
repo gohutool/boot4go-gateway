@@ -8,7 +8,7 @@ require (
 	github.com/gohutool/boot4go-fastjson v1.0.7
 	github.com/gohutool/boot4go-pathmatcher v1.0.0
 	github.com/gohutool/boot4go-prometheus v1.0.1
-	github.com/gohutool/boot4go-util v1.0.24
+	github.com/gohutool/boot4go-util v1.0.25
 	github.com/gohutool/log4go v1.0.2
 	github.com/prometheus/client_golang v1.12.1
 	github.com/qiangxue/fasthttp-routing v0.0.0-20160225050629-6ccdc2a18d87
