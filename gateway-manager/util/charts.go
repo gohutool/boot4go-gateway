@@ -17,19 +17,9 @@ import (
 * 修改历史 : 1. [2022/5/10 16:10] 创建文件 by LongYong
 */
 
-func Reverse[T any](source []T) []T {
-	var rtn []T
-
-	for idx := len(source) - 1; idx >= 0; idx-- {
-		rtn = append(rtn, source[idx])
-	}
-
-	return rtn
-}
-
 func MakeLineChartData(sername string, dimension, count int) map[string]any {
 	rtn := make(map[string]any)
-	datas := Reverse(GetSummaryMetrics(sername, dimension, count))
+	datas := util4go.Reverse(GetSummaryMetrics(sername, dimension, count))
 
 	rtn["xAxis"] = util4go.Collect(datas, func(one model.MetricsPoint) string {
 		return one.Point.Text
