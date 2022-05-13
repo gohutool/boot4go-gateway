@@ -50,8 +50,9 @@ func StartHttpServer(listener net.Listener, router *routing.Router) {
 		Compress:           false,
 		AcceptByteRange:    false,
 		PathNotFound: func(ctx *fasthttp.RequestCtx) {
-			ctx.Error(Result.Fail(fmt.Sprintf("Page Not Found, %v %v", string(ctx.Method()), string(ctx.RequestURI()))).Json(),
-				fasthttp.StatusNotFound)
+			ctx.Response.Header.SetContentType("application/json;charset=utf-8")
+			ctx.SetStatusCode(fasthttp.StatusNotFound)
+			ctx.Write([]byte(Result.Fail(fmt.Sprintf("Page Not Found, %v %v", string(ctx.Method()), string(ctx.RequestURI()))).Json()))
 		},
 	}
 
