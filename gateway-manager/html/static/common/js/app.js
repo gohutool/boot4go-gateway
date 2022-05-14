@@ -222,7 +222,7 @@ initAjax = function(){
 			  response.xhr=xhr;
 			  response.data=data;
 
-			  if ($.app.afterSuccess && $.isFunction($.app.afterSuccess) && $.app.afterSuccess(response)===false){
+			  if ($.app.afterSuccess && $.isFunction($.app.afterSuccess) && $.app.afterSuccess(options, response)===false){
 				  return;
 			  }
 
@@ -313,7 +313,7 @@ initAjax = function(){
 			response.xhr=request;
 			response.data= request.responseJSON||{};
 
-			if ($.app.afterError && $.isFunction($.app.afterError) && $.app.afterError(response)===false){
+			if ($.app.afterError && $.isFunction($.app.afterError) && $.app.afterError(options, response)===false){
 				return;
 			}
 
