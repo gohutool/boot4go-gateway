@@ -131,12 +131,21 @@ function doError(_error, request, _url, ignoreerror, _success) {
 				}
 			}
 		} else {
-			dispatchErrorMsg(ERROR_INFO('-10086', 'rpc-call'));
-			if (request.responseText) {
-				$.app.err(ERROR_INFO('-10086', _url) + ' text : ' + request.responseText);
-			} else {
+			if (ignoreerror && _success) {
+				let data = {};
+				data.msg = request.responseText;
+				data.resp_msg = request.responseText;
+				data.resp_code = -1;
+				data.status = -1;
+				_success.apply(this, [data, request.status, request]);
+			}else{
+				dispatchErrorMsg(ERROR_INFO('-10086', 'rpc-call'));
+				if (request.responseText) {
+					$.app.err(ERROR_INFO('-10086', _url) + ' text : ' + request.responseText);
+				} else {
 
-				$.app.err(ERROR_INFO('-10086', _url));
+					$.app.err(ERROR_INFO('-10086', _url));
+				}
 			}
 		}
 	}
