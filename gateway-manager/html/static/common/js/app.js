@@ -958,6 +958,12 @@ $.app.ajax = function(urlstr, datastr, method, datatype, fn, ignoreerror, progre
                            };
 	header = $.extend(header, requestHeader);
 
+	let errorFn = null
+
+	if($.isFunction(ignoreerror)){
+		errorFn = ignoreerror
+	}
+
 	$.ajax({
 	      url: urlstr,
 	      type: method,
@@ -972,6 +978,7 @@ $.app.ajax = function(urlstr, datastr, method, datatype, fn, ignoreerror, progre
 	      dataType: datatype,
 	      progressing: progressing,
 	      success: fn,
+		  error: errorFn,
 	      'ignoreerror':ignoreerror
 	  });
 };
