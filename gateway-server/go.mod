@@ -13,7 +13,6 @@ require (
 	github.com/gohutool/log4go v1.0.2
 	github.com/prometheus/client_golang v1.12.1
 	github.com/qiangxue/fasthttp-routing v0.0.0-20160225050629-6ccdc2a18d87
-	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sony/gobreaker v0.5.0
 	github.com/valyala/fasthttp v1.36.0
