@@ -1339,3 +1339,33 @@ $.extends.formatNumber = function(num, pattern) {
 		num = num.replace(reg, "$1" + s + "$2");
 	return num;
 }
+
+$.extends.base64JsonEncode = function(obj){
+	if(obj == null)
+		return null
+
+	let rtn = {}
+
+	$.each(obj, function(key, val) {
+		if(val!=null){
+			rtn[key] = Base64.encode(val)
+		}
+	})
+
+	return rtn
+}
+
+$.extends.base64JsonDecode = function(obj){
+	if(obj == null)
+		return null
+
+	let rtn = {}
+
+	$.each(obj, function(key, val) {
+		if(val!=null){
+			rtn[key] = Base64.decode(val)
+		}
+	})
+
+	return rtn
+}

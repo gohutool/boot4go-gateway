@@ -151,6 +151,7 @@ function loadAll(cb){
         ROOT_RES_URL + "/static/common/js/jquery.extends.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/common/js/jquery.extends-excel.js?" + APP_VERSION,
 
+        ROOT_RES_URL + "/static/plugins/jquery/jquery.base64.min.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/plugins/jquery/daterangepicker-master/moment.min.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/plugins/jquery/daterangepicker-master/daterangepicker.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/plugins/jquery/store.js-master/dist/store.everything.min.js?" + APP_VERSION,

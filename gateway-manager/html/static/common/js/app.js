@@ -142,6 +142,19 @@ function doError(_error, request, _url, ignoreerror, _success) {
 	}
 }
 
+
+$.app.beforeRequest = function (options){
+	console.log(options)
+}
+
+$.app.afterSuccess = function (response){
+	console.log(response)
+}
+
+$.app.afterError = function (response){
+	console.log(response)
+}
+
 initAjax = function(){
 	$.app.jqueryAjax = $.ajax;
 
@@ -198,11 +211,25 @@ initAjax = function(){
 		var newsuccess = function(data, textStatus, xhr){
 			  ms = afterSendfn();
 
-			  var issessiontime = xhr.getResponseHeader("is-session-timeout");
-			  var isnotauthorized = xhr.getResponseHeader("is-not-authorized");
-			  var isapplicationexception = xhr.getResponseHeader("is-application-exception");
+			  let issessiontime = xhr.getResponseHeader("is-session-timeout");
+			  let isnotauthorized = xhr.getResponseHeader("is-not-authorized");
+			  let isapplicationexception = xhr.getResponseHeader("is-application-exception");
 
-			  if(issessiontime && issessiontime == '1')
+			  let response = {};
+			  response.issessiontime=issessiontime;
+			  response.isnotauthorized=isnotauthorized;
+			  response.isapplicationexception=isapplicationexception;
+			  response.xhr=xhr;
+			  response.data=data;
+
+			  if ($.app.afterSuccess && $.isFunction($.app.afterSuccess) && $.app.afterSuccess(response)===false){
+				  return;
+			  }
+
+			  data = response.data;
+			  xhr = response.xhr;
+
+			  if(response.issessiontime && response.issessiontime == '1')
 			  {
 
 				  if(_error){
@@ -213,7 +240,7 @@ initAjax = function(){
 				  $.app.onSessionTime(xhr);
 				  return;
 			  }
-			  else if(isnotauthorized && isnotauthorized == '1')
+			  else if(response.isnotauthorized && response.isnotauthorized == '1')
 			  {
 				  if(_error){
                         prepareData4Result(data, -1);
@@ -223,7 +250,7 @@ initAjax = function(){
 				  dispatchErrorMsg(ERROR_INFO('-95555'));
 				  return;
 			  }
-			  else if(isapplicationexception && isapplicationexception == '1')
+			  else if(response.isapplicationexception && response.isapplicationexception == '1')
 			  {
 				  if(_error){
                         prepareData4Result(data, -1);
@@ -275,19 +302,32 @@ initAjax = function(){
 		var newerror = function(request){
 			afterSendfn();
 
-			var issessiontime = request.getResponseHeader("is-session-timeout");
-		    var isnotauthorized = request.getResponseHeader("is-not-authorized");
+			let issessiontime = request.getResponseHeader("is-session-timeout");
+			let isnotauthorized = request.getResponseHeader("is-not-authorized");
+			let isapplicationexception = request.getResponseHeader("is-application-exception");
 
-		 	if(issessiontime && issessiontime == '1')
+			let response = {};
+			response.issessiontime=issessiontime;
+			response.isnotauthorized=isnotauthorized;
+			response.isapplicationexception=isapplicationexception;
+			response.xhr=request;
+			response.data= request.responseJSON||{};
+
+			if ($.app.afterError && $.isFunction($.app.afterError) && $.app.afterError(response)===false){
+				return;
+			}
+
+			data = response.data;
+			response = response.xhr;
+
+		 	if(response.issessiontime && response.issessiontime == '1')
 			  {
 
 				  if(_error){
-                      if(request.responseJSON){
-                            var data = request.responseJSON;
+                      if(data){
                             prepareData4Result(data, -1);
                             _error.call(this, data, request.status, request);
                         }else{
-                            var data = {};
                             prepareData4Result(data, -1);
                             _error.call(this, data, request.status, request);
                         }
@@ -296,15 +336,13 @@ initAjax = function(){
 				  $.app.onSessionTime(request);
 				  return;
 			  }
-			  else if(isnotauthorized && isnotauthorized == '1')
+			  else if(response.isnotauthorized && response.isnotauthorized == '1')
 			  {
 				  if(_error){
-						if(request.responseJSON){
-                            var data = request.responseJSON;
+						if(data){
                             prepareData4Result(data, -1);
                             _error.call(this, data, request.status, request);
                         }else{
-                            var data = {};
                             prepareData4Result(data, -1);
                             _error.call(this, data, request.status, request);
                         }
@@ -373,6 +411,11 @@ initAjax = function(){
 			$.app.jqueryAjax(url, options);
 		}, 200 * 1);
 		*/
+
+		if ($.app.beforeRequest && $.isFunction($.app.beforeRequest) && $.app.beforeRequest(options)===false){
+			return
+		}
+
 		$.app.jqueryAjax(url, options);
 	};
 };
