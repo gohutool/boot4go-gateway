@@ -89,12 +89,12 @@ function doError(_error, request, _url, ignoreerror, _success) {
 		if (request.responseJSON) {
 			var data = request.responseJSON;
 			prepareData4Result(data, -1);
-			dispatchErrorMsg(data.msg);
+			//dispatchErrorMsg(data.msg);
 			_error.call(this, data, request.status, request);
 		} else {
 			var data = {};
 			prepareData4Result(data, -1);
-			dispatchErrorMsg(request.responseText);
+			//dispatchErrorMsg(request.responseText);
 			_error.call(this, data, request.status, request);
 		}
 		$.app.err(ERROR_INFO('-10086', _url));
