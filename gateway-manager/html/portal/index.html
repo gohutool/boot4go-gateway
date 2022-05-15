@@ -40,7 +40,7 @@
     </script>
 </head>
 
-<body>
+<body style="background: #f7f7f7;">
 <div id="loading" class="loading-wrap">
     <div class="loading-content">
         <div class="loading-round"></div>
@@ -91,115 +91,73 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="cardList-wrapper">
-            <div class="card-item">
-                <div class="card-title">消息总数</div>
-                <div class="all-count">
-                    <span>356,256</span>
-                    <span class="suffix">条</span>
-                </div>
-                <div class="card-info">
-                    <span>今日消息数：653条</span>
-                </div>
-            </div>
-            <div class="card-item">
-                <div class="card-title">访问量</div>
-                <div class="all-count">
-                    <span>3,750</span>
-                    <span class="suffix">万次</span>
-                </div>
-                <div class="card-info">
-                    <span>日访问量：11万次</span>
-                </div>
-            </div>
-            <div class="card-item">
-                <div class="card-title">用户总数</div>
-                <div class="all-count">
-                    <span>19,256</span>
-                    <span class="suffix">个</span>
-                </div>
-                <div class="card-info">
-                    <span>今日新增用户数：26个</span>
-                </div>
-            </div>
-            <div class="card-item" onclick="javascript:triggerNavMenuClick('销售管理','销售单证管理','销售退货单')">
-                <div class="card-title">文章总数</div>
-                <div class="all-count">
-
-                    <span>19,256</span>
-                    <span class="suffix">篇</span>
-                </div>
-                <div class="card-info">
-                    <span>今日新增文章数：159篇</span>
-                </div>
-            </div>
-        </div>
-        -->
 
          <div class="layui-row layui-col-space10">
             <div class="layui-col-md4">
-                <blockquote class="layui-elem-quote title">24小时请求量和失败量
+                <div class="card card-hoverable">
+                    <div class="card-head">
+                        <span class="card-head-icon"><svg t="1624610578335" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1065" width="100%" height="100%"><path d="M464.904 256.496L467.288 88H91.704v168.496h373.2z m0 0" fill="#76DA91" p-id="1066"></path><path d="M776.968 490.04l4.376-168.496H91.704v168.496h685.264z m0 0" fill="#76DA91" p-id="1067"></path><path d="M617.56 723.584l3.36-168.496H91.704v168.496h525.856z m0 0" fill="#76DA91" p-id="1068"></path><path d="M313.704 957.128l1.416-168.496H91.704v168.496h222z m0 0" fill="#76DA91" p-id="1069"></path><path d="M41.8 975.608V88.144H0V1024h1009.936v-48.392H41.8z m0 0" fill="#76DA91" p-id="1070"></path></svg></span>
+                        <span>24小时请求量和失败量</span>
+                        <span style='float: right;position: absolute;right: 20px;height: 48px;'>
+                        <a style='display1:none;float:right;margin: 10px auto;' id='pieChart-refresh-bnt' href="javascript:void(0)"
+                               data-toggle="cubeui-menubutton"
+                               data-options="
+                                   onClick:refreshPieChart,
+                                   iconCls:'fa fa-refresh',
+                                   btnCls:'cubeui-btn-blue'">刷新</a>
+                                   </span>
+                    </div>
+                    <div class="card-body">
+                        <div id='barChart'></div>
+                    </div>
+                </div>
 
-                     <a style='display1:none;float:right' id='pieChart-refresh-bnt' href="javascript:void(0)"
-                           data-toggle="cubeui-menubutton"
-                           data-options="
-                               onClick:refreshPieChart,
-                               iconCls:'fa fa-refresh',
-                               btnCls:'cubeui-btn-blue'">刷新</a>
-
-                </blockquote>
-
-                <table class="layui-table" lay-skin="line">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div id='barChart'></div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
             <div class="layui-col-md4">
-                <blockquote class="layui-elem-quote title">最近6小时请求变化
 
-                     <a style='display1:none;float:right' id='pieChart-refresh-bnt' href="javascript:void(0)"
-                           data-toggle="cubeui-menubutton"
-                           data-options="
-                               onClick:refreshPieChart,
-                               iconCls:'fa fa-refresh',
-                               btnCls:'cubeui-btn-blue'">刷新</a>
-                </blockquote>
-                <table class="layui-table" lay-skin="line">
-                    <tbody>
-                    <tr>
-                        <td align="left">
+                <div class="card card-hoverable">
+                    <div class="card-head">
+                        <span class="card-head-icon">
+                        <svg t="1624610641908" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1215" width="100%" height="100%"><path d="M959.159 928.219H64.063V98.125h37.045v787.166h858.051z" fill="#F47A75" p-id="1216"></path><path d="M580.658 796.245L369.686 628.169 158.642 760.785l-17.659-37.737 230.991-145.15 208.508 166.113 334.054-270.609 21.225 35.183z" fill="#F47A75" p-id="1217"></path><path d="M152.112 601.753l-28.68-27.17L360.23 238.944 569.003 494.92 903.52 103.683l26.316 30.213-361.462 422.75L362.245 303.91z" fill="#F47A75" p-id="1218"></path></svg>
+                        </span>
+                        <span>最近6小时请求变化</span>
+                        <span style='float: right;position: absolute;right: 20px;height: 48px;'>
+                        <a style='display1:none;float:right;margin: 10px auto;' id='pieChart-refresh-bnt' href="javascript:void(0)"
+                               data-toggle="cubeui-menubutton"
+                               data-options="
+                                   onClick:refreshPieChart,
+                                   iconCls:'fa fa-refresh',
+                                   btnCls:'cubeui-btn-blue'">刷新</a>
+                                   </span>
+                    </div>
+                    <div class="card-body">
                             <div id='lineChart'></div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+
+
             </div>
             <div class="layui-col-md4">
-                <blockquote class="layui-elem-quote title">网关请求状态统计
+                <div class="card card-hoverable">
+                    <div class="card-head">
+                        <span class="card-head-icon">
+                        <svg t="1624610641908" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1215" width="100%" height="100%"><path d="M959.159 928.219H64.063V98.125h37.045v787.166h858.051z" fill="#F47A75" p-id="1216"></path><path d="M580.658 796.245L369.686 628.169 158.642 760.785l-17.659-37.737 230.991-145.15 208.508 166.113 334.054-270.609 21.225 35.183z" fill="#F47A75" p-id="1217"></path><path d="M152.112 601.753l-28.68-27.17L360.23 238.944 569.003 494.92 903.52 103.683l26.316 30.213-361.462 422.75L362.245 303.91z" fill="#F47A75" p-id="1218"></path></svg>
+                        </span>
+                        <span>网关请求状态统计</span>
+                        <span style='float: right;position: absolute;right: 20px;height: 48px;'>
+                        <a style='display1:none;float:right;margin: 10px auto;' id='pieChart-refresh-bnt' href="javascript:void(0)"
+                               data-toggle="cubeui-menubutton"
+                               data-options="
+                                   onClick:refreshPieChart,
+                                   iconCls:'fa fa-refresh',
+                                   btnCls:'cubeui-btn-blue'">刷新</a>
+                                   </span>
+                    </div>
+                    <div class="card-body">
+                            <div id='pieChart'></div>
+                    </div>
+                </div>
 
-                     <a style='display1:none;float:right' id='pieChart-refresh-bnt' href="javascript:void(0)"
-                           data-toggle="cubeui-menubutton"
-                           data-options="
-                               onClick:refreshPieChart,
-                               iconCls:'fa fa-refresh',
-                               btnCls:'cubeui-btn-blue'">刷新</a>
-
-                </blockquote>
-                <table class="layui-table" lay-skin="line">
-                    <tbody>
-                        <tr>
-                            <td align="left">
-                                <div id='pieChart'></div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -232,55 +190,6 @@
                 </blockquote>
             </div>
         </div>
-
-        <!-- $portal_tpls -->
-        <!--
-        <div class="panel_box row">
-            <div class="panel col">
-
-                <a href="javascript:triggerNavMenuClick('销售管理','销售单证管理','销售退货单')">
-                    <div class="panel_icon" style="background-color:#5FB878;">
-                        <i class="iconfont icon-edit" data-icon="icon-edit"></i>
-                    </div>
-                    <div class="panel_word imgAll">
-                        <span>0</span>
-                        <cite>销售退货</cite>
-                    </div>
-                </a></div>
-            <div class="panel col">
-
-                <a href="javascript:triggerNavMenuClick('采购管理','采购单证管理','采购退货单')">
-                    <div class="panel_icon" style="background-color:#009688;">
-                        <i class="iconfont icon-edit" data-icon="icon-edit"></i>
-                    </div>
-                    <div class="panel_word userAll">
-                        <span>0</span>
-                        <cite>采购退货</cite>
-                    </div>
-                </a></div>
-            <div class="panel col">
-
-                <a href="javascript:triggerNavMenuClick('销售管理','销售单证管理','销售出库单')" data-url="page/user/allUsers.html">
-                    <div class="panel_icon" style="background-color:#FF5722;">
-                        <i class="iconfont icon-computer" data-icon="icon-computer"></i>
-                    </div>
-                    <div class="panel_word userAll">
-                        <span>7</span>
-                        <cite>销售出库</cite>
-                    </div>
-                </a></div>
-            <div class="panel col">
-                <a href="javascript:triggerNavMenuClick('采购管理','采购单证管理','采购入库单')">
-                    <div class="panel_icon">
-                        <i class="iconfont icon-computer" data-icon="icon-computer"></i>
-                    </div>
-                    <div class="panel_word newMessage">
-                        <span>3</span>
-                        <cite>采购入库</cite>
-                    </div>
-                </a></div>
-        </div>
-        -->
 
     </div>
 </script>
