@@ -205,11 +205,11 @@ func (u *domainHandler) DeleteDomain(context *routing.Context) error {
 		panic("没有找到" + id + "对应的域名数据")
 	}
 
-	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, error) {
+	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, string, error) {
 		return []clientv3.Op{
 			clientv3.OpDelete(DomainKey(id)),
 			clientv3.OpPut(DomainBakKey(id), o, clientv3.WithLease(leaseID)),
-		}, nil
+		}, DomainBakKey(id), nil
 	}, BakDataTTL, WriteTimeout); err != nil {
 		Logger.Error("删除域名名称失败 %+v", err)
 		panic("删除域名失败")

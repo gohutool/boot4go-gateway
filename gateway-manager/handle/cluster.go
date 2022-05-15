@@ -156,11 +156,11 @@ func (u *clusterHandler) DeleteCluster(context *routing.Context) error {
 		panic("没有找到" + id + "对应的集群数据")
 	}
 
-	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, error) {
+	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, string, error) {
 		return []clientv3.Op{
 			clientv3.OpDelete(ClusterKey(id)),
 			clientv3.OpPut(ClusterBakKey(id), o, clientv3.WithLease(leaseID)),
-		}, nil
+		}, ClusterBakKey(id), nil
 	}, BakDataTTL, WriteTimeout); err != nil {
 		Logger.Error("删除集群名称失败 %+v", err)
 		panic("删除集群失败")

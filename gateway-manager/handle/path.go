@@ -168,11 +168,11 @@ func (u *pathHandler) DeleteDomainPath(context *routing.Context) error {
 		panic("没有找到" + domainId + "/" + pathId + "对应的域名路径数据")
 	}
 
-	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, error) {
+	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, string, error) {
 		return []clientv3.Op{
 			clientv3.OpDelete(domainPathKey(domainId, pathId)),
 			clientv3.OpPut(domainPathBakKey(domainId, pathId), o, clientv3.WithLease(leaseID)),
-		}, nil
+		}, domainPathBakKey(domainId, pathId), nil
 	}, BakDataTTL, WriteTimeout); err != nil {
 		Logger.Error("删除域名名称失败 %+v", err)
 		panic("删除域名失败")

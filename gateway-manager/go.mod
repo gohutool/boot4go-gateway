@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/alecthomas/kingpin v2.2.6+incompatible
-	github.com/gohutool/boot4go-etcd v1.0.14
+	github.com/gohutool/boot4go-etcd v1.0.15
 	github.com/gohutool/boot4go-fastjson v1.0.7
 	github.com/gohutool/boot4go-pathmatcher v1.0.0
 	github.com/gohutool/boot4go-prometheus v1.0.1

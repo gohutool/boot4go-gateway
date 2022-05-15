@@ -197,11 +197,11 @@ func (u *certHandler) DeleteCert(context *routing.Context) error {
 		panic("没有找到" + certId + "/" + "对应的证书数据")
 	}
 
-	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, error) {
+	if _, err := EtcdClient.BulkOps(func(leaseID clientv3.LeaseID) ([]clientv3.Op, string, error) {
 		return []clientv3.Op{
 			clientv3.OpDelete(CertKey(certId)),
 			clientv3.OpPut(CertBakKey(certId), o, clientv3.WithLease(leaseID)),
-		}, nil
+		}, CertBakKey(certId), nil
 	}, BakDataTTL, WriteTimeout); err != nil {
 		Logger.Error("删除证书失败 %+v", err)
 		panic("删除证书失败")
