@@ -326,8 +326,8 @@ initAjax = function(){
 				return;
 			}
 
-			data = response.data;
-			response = response.xhr;
+			let data = response.data;
+			//let xhr = response.xhr;
 
 		 	if(response.issessiontime && response.issessiontime == '1')
 			  {
