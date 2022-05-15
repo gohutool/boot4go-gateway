@@ -450,7 +450,7 @@ func SaveSummaryMetrics(sername string, dimension Dimension, d1, d2, d3, d4, d5 
 		key1D = fmt.Sprintf(OVERALL_METRICS_SUMMARY_DATA_DIMENSION_FORMAT, "1d", dimension.MD)
 	}
 
-	_, err := EtcdClient.BulkOpsPlus(func(txn clientv3.Txn, leaseID clientv3.LeaseID) (clientv3.Txn, error) {
+	_, err := EtcdClient.BulkOpsPlus(func(txn clientv3.Txn, leaseID clientv3.LeaseID) (clientv3.Txn, string, error) {
 
 		var l1, l15, l30, l60, l1d clientv3.LeaseID = clientv3.NoLease, clientv3.NoLease, clientv3.NoLease, clientv3.NoLease, clientv3.NoLease
 
@@ -517,7 +517,7 @@ func SaveSummaryMetrics(sername string, dimension Dimension, d1, d2, d3, d4, d5 
 			clientv3.OpPut(key1D, summaryMetrics2String(d5), clientv3.WithLease(l1d)),
 		}...)
 
-		return txn, nil
+		return txn, "", nil
 	}, 0, 0)
 
 	if err != nil {
