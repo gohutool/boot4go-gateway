@@ -4486,6 +4486,77 @@ $.fn.iDialog.defaults.onLoad = $.easyui.event.delegate(
 	);
 /**/
 
+(function(a){
+	function b(b, c) {
+		void 0 == c.id && (c.id = getRandomNumByDef());
+		var d = 0 == c.form ? "div" : "form"
+			, e = "<" + d + ' id="' + c.id + '"></' + d + ">"
+			, f = ""
+			, g = []; //c.buttons='#' + c.id + '-buttons1';
+		if ("object" == typeof c.buttonsGroup) {
+			var h = c.buttonsGroup;
+			a.each(h, function(a, b) {
+				b.handler || (b.handler = "ajaxForm"),
+				void 0 == b.id && g.push(getRandomNumByDef()),
+					f += '<a id="' + g[a] + '" href="#" data-options="mbId:\'' + c.mbId + "',menuType:'" + c.menuType + "',dialogId:'" + c.id + "'\">" + b.text + "</a>"
+			})
+		}
+
+		lf = "";
+		g2 = [];
+
+		if ("object" == typeof c.leftButtonsGroup) {
+
+			var h = c.leftButtonsGroup;
+			a.each(h, function(a, b) {
+				b.handler || (b.handler = "ajaxForm"),
+				void 0 == b.id && g2.push(getRandomNumByDef()),
+					lf += '<a id="' + g2[a] + '" href="#" data-options="mbId:\'' + c.mbId + "',menuType:'" + c.menuType + "',dialogId:'" + c.id + "'\">" + b.text + "</a>"
+			})
+		}
+
+		if(c.leftButtonsGroup!= null && c.leftButtonsGroup.length > 0){
+			if(!c.ignoreclose || !c.ignoreclose)
+				a("body").append(e + '<div id="' + c.id + '-buttons" style="display:none"><div style="display: inline;left: 10px;position: absolute;">'+lf+'</div><div style="display: inline;">' + f + '<a href="#" class="closeDialog" onclick="closeDialog(\'' + c.id + "')\">"+$.locale.label.close+"</a><div></div>");
+			else
+				a("body").append(e + '<div id="' + c.id + '-buttons" style="display:none"><div style="display: inline;left: 10px;position: absolute;">'+lf+'</div><div style="display: inline;">' + f +  "<div></div>");
+		}else{
+			if(!c.ignoreclose || !c.ignoreclose)
+				a("body").append(e + '<div id="' + c.id + '-buttons" style="display:none">' + f + '<a href="#" class="closeDialog" onclick="closeDialog(\'' + c.id + "')\">"+$.locale.label.close+"</a></div>");
+			else
+				a("body").append(e + '<div id="' + c.id + '-buttons" style="display:none">' + f +  "</div>");
+		}
+
+		if ("object" == typeof c.buttonsGroup) {
+			var i = c.buttonsGroup;
+			a.each(i, function(b, c) {
+				a("#" + g[b]).iLinkbutton(c)
+			})
+		}
+
+
+		if(c.leftButtonsGroup!= null && c.leftButtonsGroup.length > 0){
+			var i = c.leftButtonsGroup;
+			a.each(i, function(b, c) {
+				a("#" + g2[b]).iLinkbutton(c)
+			})
+		}
+
+		return a(".closeDialog").iLinkbutton({
+			iconCls: "fa fa-close",
+			btnCls: "cubeui-btn-red",
+			text: ""+$.locale.label.close+""
+		}),
+			a("#" + c.id).iDialog(c),
+			c
+	}
+
+	$.fn.iDialog.methods = $.extend({}, $.fn.iDialog.methods, {
+		createDialog:b
+	});
+
+})($);
+
 $.fn.parsebuttonpanel = function(){
 	$.app.debug('start on Completed');
 	var ms = new Date().getTime();
