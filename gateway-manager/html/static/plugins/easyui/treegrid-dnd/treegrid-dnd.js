@@ -37,6 +37,17 @@
 				}
 			});
 		},
+		enableDndChildren: function (jq, id){
+			let rows = $(jq).treegrid('getChildren', id);
+			if(rows){
+				$.each(rows, function (idx, row){
+					if(row.hasOwnProperty('disableDnd') || row['disableDnd']){
+					}else{
+						$(jq).treegrid('enableDnd', row.id);
+					}
+				})
+			}
+		},
 		enableDnd: function(jq, id){
 			if (!$('#treegrid-dnd-style').length){
 				$('head').append(
