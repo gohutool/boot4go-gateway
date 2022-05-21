@@ -142,7 +142,7 @@ function loadAllCss(){
 }
 
 function loadAll(cb){
-    dynamicLoading.dynLoadJs([
+    let js = [
         ROOT_RES_URL + "/static/package.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/plugins/jquery/jquery.min.js?" + APP_VERSION,
         ROOT_RES_URL + "/static/plugins/jquery/jquery.cookie.js?" + APP_VERSION,
@@ -179,21 +179,27 @@ function loadAll(cb){
         ROOT_RES_URL + "/static/plugins/pdfmake/pdfmake.js?" + APP_VERSION,
 
         ROOT_RES_URL + "/static-extend/js/common.js?" + APP_VERSION,
-    ], function (){
+    ];
+
+    dynamicLoading.dynLoadJs(js, function (){
         console.log("APP LoadJs start ")
 
-        var myHelpers = {
-            upper: function(val) { return val.toUpperCase(); },
-            lower: function(val) { return val.toLowerCase(); },
-            trim: function(val) { return val.trim(); },
+        let myHelpers = {
+            upper: function(val) { return val?val.toUpperCase():''; },
+            lower: function(val) { return val?val.toLowerCase():''; },
+            trim: function(val) { return val?val.trim():''; },
+            js: function(val) { return val?val.trim().jsEncode():''; },
+            html: function(val) { return val?val.trim().htmlEncode():''; },
             title: "Debug"
         };
 
         $.views.helpers(myHelpers);
 
-        $.views.converters("upper", function(val) { return val.toUpperCase(); });
-        $.views.converters("lower", function(val) { return val.toLowerCase(); });
-        $.views.converters("trim", function(val) { return val.trim(); });
+        $.views.converters("upper", function(val) { return val?val.toUpperCase():''; });
+        $.views.converters("lower", function(val) { return val?val.toLowerCase():''; });
+        $.views.converters("trim", function(val) { return val?val.trim():''; });
+        $.views.converters("js", function(val) { return val?val.trim().jsEncode():''; });
+        $.views.converters("html", function(val) { return val?val.trim().htmlEncode():''; });
 
         pdfMake.fonts = {
             gbk:{
@@ -213,7 +219,7 @@ function loadAll(cb){
 
 }
 
-var APP = function(config){
+let APP = function(config){
 
     loadAll(function(){
 

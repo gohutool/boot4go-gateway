@@ -11,6 +11,26 @@ function debug(info) {
 	}
 }
 
+String.prototype.jsEncode = function() {
+	let result = this;
+
+	result = result.replace('\\', '\\\\');
+	result = result.replace('\'', '\\\'');
+	result = result.replace('\"', '\\\"')
+
+	return result;
+}
+
+String.prototype.htmlEncode = function() {
+	let result = this;
+
+	result = result.replace('\'', '&apos;');
+	result = result.replace('\"', '&quot;')
+
+	return result;
+}
+
+
 String.prototype.format2 = function(args) {
 	let result = this;
 
@@ -158,6 +178,9 @@ $.fn.getoptions = function(){
 
 $.extends = {};
 
+$.extends.copyToClipBoard = function(txt, okFn, errFn){
+	navigator.clipboard.writeText(txt).then(okFn, errFn)
+}
 
 $.extends.toExcelHtml = function(title, options){
 	var data = ['<table border="1" rull="all" style="border-collapse:collapse">'];
@@ -877,6 +900,8 @@ $.extends.isIdCardNo=function (num) {
 	return true;
 };
 
+
+
 $.extends.initExtentValidateRule=function() {
 	// 判断整数value是否等于0
 	jQuery.validator.addMethod("isIntEqZero", function(value, element) {
@@ -1153,10 +1178,10 @@ $.extends.getFormJson=function(form, prefix) {
 			if (!o[this.name].push) {
 				o[this.name] = [ o[this.name] ];
 			}
-			o[this.name].push($(id).attr("rturnid") || this.value || '');
+			o[this.name].push($(id).attr("returnid") || this.value || '');
 
 		} else {
-			o[this.name] = $(id).attr("rturnid") || this.value || '';
+			o[this.name] = $(id).attr("returnid") || this.value || '';
 		}
 	});
 
