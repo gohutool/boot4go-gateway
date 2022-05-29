@@ -103,10 +103,10 @@ func Proxy(host string, schema string, uri string, query string, ctx *fasthttp.R
 		response.SetStatusCode(http.StatusInternalServerError)
 
 		if errors.Is(err, fasthttp.ErrTimeout) {
-			response.Header.Set("proxy-error", "timeout")
+			response.Header.Set("proxy-error", "target-timeout")
 			response.SetStatusCode(http.StatusRequestTimeout)
 		} else {
-			response.Header.Set("proxy-error", "No connection ")
+			response.Header.Set("proxy-error", "target-no-connection")
 		}
 
 		response.SetBody([]byte(err.Error()))
