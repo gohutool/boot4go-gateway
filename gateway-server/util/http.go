@@ -51,7 +51,7 @@ func DelRequestHeader(request *fasthttp.Request) {
 	}
 }
 
-func Proxy(host string, schema string, uri string, query string, ctx *fasthttp.RequestCtx) error {
+func Proxy(host string, schema string, uri string, query string, ctx *fasthttp.RequestCtx, timeout int) error {
 	request := &ctx.Request
 	response := &ctx.Response
 
@@ -97,12 +97,16 @@ func Proxy(host string, schema string, uri string, query string, ctx *fasthttp.R
 	//request.SetRequestURI(uri)
 
 	// execute the request and rev response with timeout
-	if err := doWithTimeout(client, request, response, 3000); err != nil {
+
+	if err := doWithTimeout(client, request, response, timeout); err != nil {
 
 		response.SetStatusCode(http.StatusInternalServerError)
 
 		if errors.Is(err, fasthttp.ErrTimeout) {
+			response.Header.Set("proxy-error", "timeout")
 			response.SetStatusCode(http.StatusRequestTimeout)
+		} else {
+			response.Header.Set("proxy-error", "No connection ")
 		}
 
 		response.SetBody([]byte(err.Error()))

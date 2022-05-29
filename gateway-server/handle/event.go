@@ -179,21 +179,23 @@ func (wl *watchEventListener) InitDomainPathChangeListener() {
 	})
 }
 
-func (wl *watchEventListener) InitMetricsScheduleJob() {
-	go func() {
-		for {
-			func() {
-				defer func() {
-					if err := recover(); err != nil {
-						Logger.Warning("MetricsScheduleJob error %v", err)
-					}
+func (wl *watchEventListener) InitMetricsScheduleJob(monitor bool) {
+	if monitor {
+		go func() {
+			for {
+				func() {
+					defer func() {
+						if err := recover(); err != nil {
+							Logger.Warning("MetricsScheduleJob error %v", err)
+						}
+					}()
+
+					time.Sleep(10 * time.Second)
+
+					SaveMetricsSummary(SERVER_NAME)
+
 				}()
-
-				time.Sleep(10 * time.Second)
-
-				SaveMetricsSummary(SERVER_NAME)
-
-			}()
-		}
-	}()
+			}
+		}()
+	}
 }

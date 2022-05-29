@@ -84,7 +84,7 @@ func InitProxyHandler() fasthttp.RequestHandler {
 
 			s, h, q := t.Schema, t.Host, t.Query
 
-			if err := Proxy(h, s, destUri, q, ctx); err != nil {
+			if err := Proxy(h, s, destUri, q, ctx, path.CircuitBreakerTimeout); err != nil {
 				Logger.Debug("Proxy error : %v", err)
 				MetricsVisitError()
 			} else {

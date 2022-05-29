@@ -42,6 +42,8 @@ func main() {
 	etcd_flag := app.Flag("etcd", "Etcd: etcd server addr.").Default("192.168.56.101:32379").Short('n').String()
 	username_flag := app.Flag("username", "Username: etcd username.").Short('u').Default("").String()
 	password_flag := app.Flag("password", "Password: etcd password.").Short('p').Default("").String()
+	monitor_flag := app.Flag("monitor", "Monitor: Gateway Manager can monitor.").Short('m').Default("false").Bool()
+	Metrics_Enable = *monitor_flag
 
 	app.HelpFlag.Short('h')
 	app.Version(SERVER_VERSION)
@@ -67,6 +69,7 @@ func main() {
 
 	initPool()
 	registerGateWay(*addr_flag)
+	startMonitor(*monitor_flag)
 
 	requestHandler := PrometheusRequestHandler(fasthttp.RequestHandler(InitProxyHandler()))
 
@@ -149,12 +152,14 @@ func registerGateWay(address string) {
 
 	handle.WatchEventListener.InitCertChangeListener()
 
-	handle.WatchEventListener.InitMetricsScheduleJob()
-
 	Logger.Info("Registry the instance into etcd server.")
 }
 
 func unRegisterGateWay() {
 
 	Logger.Info("Unregistry the instance from etcd server.")
+}
+
+func startMonitor(monitor bool) {
+	handle.WatchEventListener.InitMetricsScheduleJob(monitor)
 }

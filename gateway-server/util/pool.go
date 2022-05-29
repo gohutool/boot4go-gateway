@@ -358,34 +358,52 @@ func (d domainPool) RemovePath(path Path) {
 	Logger.Info("域名路径映射删除事件[%v][%v]删除完成", path.DomainUrl, path.ReqPath)
 }
 
+var Metrics_Enable bool
+
 func MetricsCertDown() {
-	IncrVisitCertDown(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitCertDown(SERVER_NAME)
+	}
 }
 
 func MetricsCertFail() {
-	IncrVisitCertError(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitCertError(SERVER_NAME)
+	}
 }
 
 func MetricsVisitOK() {
-	IncrVisitOk(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitOk(SERVER_NAME)
+	}
 }
 
 func MetricsVisitHostLose() {
-	IncrVisitHostLose(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitHostLose(SERVER_NAME)
+	}
 }
 
 func MetricsVisitTargetLose() {
-	IncrVisitTargetLose(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitTargetLose(SERVER_NAME)
+	}
 }
 
 func MetricsVisitPathLose() {
-	IncrVisitPathLose(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitPathLose(SERVER_NAME)
+	}
 }
 
 func MetricsVisitError() {
-	IncrVisitERROR(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitERROR(SERVER_NAME)
+	}
 }
 
 func MetricsVisitBlackIP() {
-	IncrVisitBlackIP(SERVER_NAME)
+	if Metrics_Enable {
+		IncrVisitBlackIP(SERVER_NAME)
+	}
 }
