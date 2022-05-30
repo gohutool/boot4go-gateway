@@ -50,7 +50,7 @@ func (wl *watchEventListener) InitMachineDataNotify(address string) {
 
 	registryMachine(data, counter)
 
-	initGatewayChangeListener(address, data, counter)
+	//initGatewayChangeListener(address, data, counter)
 }
 
 func initGatewayChangeListener(address string, data map[string]interface{}, counter *int) {
