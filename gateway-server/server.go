@@ -10,6 +10,8 @@ import (
 	. "github.com/gohutool/boot4go-etcd/client"
 	"github.com/valyala/fasthttp"
 	"net"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"sync"
@@ -118,6 +120,10 @@ func main() {
 			}
 		}()
 	}
+
+	go func() {
+		http.ListenAndServe("0.0.0.0:8999", nil)
+	}()
 
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
