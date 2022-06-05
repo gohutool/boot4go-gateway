@@ -119,6 +119,8 @@ github.com/gohutool/boot4go-prometheus v1.0.2 h1:DiXx2fu73EjQkGPLSyXUBsytKyjru35
 github.com/gohutool/boot4go-prometheus v1.0.2/go.mod h1:qLX7ImHUkAiQcuObcfQaOeKLRPcuTVEVVNBDLZUH3bU=
 github.com/gohutool/boot4go-util v1.0.24 h1:lgh7ATgFqI1C/ec2jlpchKtE2+NwXHidFZvsuo9APeM=
 github.com/gohutool/boot4go-util v1.0.24/go.mod h1:QK2IkthwrRu3kGNyCKg0OYCUiG1EquyLQQG3NQpQi/M=
+github.com/gohutool/boot4go-util v1.0.40 h1:8Y64+bKNYRZ3MoqfR7IAqgvmhHgR21Pn3yqgrHsZB8Q=
+github.com/gohutool/boot4go-util v1.0.40/go.mod h1:XP0VAw61K1gJPSXANQLaRUlvS5mHAfw8B7bLdT931fY=
 github.com/gohutool/log4go v1.0.2 h1:iV8TkROQG+Cqvegg1zC5PPane1PAMwJ5vLFof9/1k8w=
 github.com/gohutool/log4go v1.0.2/go.mod h1:NNSgiNWEro9XhO3antf1DxcjnICKEPdOux7kMGn8dGA=
 github.com/golang/gddo v0.0.0-20210115222349-20d68f94ee1f h1:16RtHeWGkJMc80Etb8RPCcKevXGldr57+LOyZt8zOlg=
